@@ -84,7 +84,7 @@ GCCJIT::~GCCJIT()
 }
 
 void *GCCJIT::translate(std::string code, std::set<std::string> headerpaths, std::set<std::string> librarypaths,
-                        std::set<std::string> libraries, std::string &error, bool debug)
+                        std::set<std::string> libraries, std::string &error, bool debug, size_t *code_size)
 {
 
     if (system(NULL) == 0)

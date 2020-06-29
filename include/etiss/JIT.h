@@ -82,7 +82,7 @@ class JIT
     */
     virtual void *translate(std::string code, std::set<std::string> headerpaths, std::set<std::string> librarypaths,
                             std::set<std::string> libraries, std::string &error,
-                            bool debug = true) = 0; // CHANGE!!origianl debug = false:
+                            bool debug = true, size_t *code_size = 0) = 0; // CHANGE!!origianl debug = false:
     /**
             @brief returns a function pointer to a compiled function from the handle returned by etiss::JIT::translate
     */

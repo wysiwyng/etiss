@@ -52,6 +52,8 @@
 #include "etiss/CPUCore.h"
 #include "etiss/ETISS.h"
 
+#include <jitprofiling.h>
+
 using namespace etiss;
 
 /**

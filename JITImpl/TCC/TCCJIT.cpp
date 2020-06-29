@@ -106,7 +106,7 @@ TCCJIT::TCCJIT() : JIT("tcc")
 }
 
 void *TCCJIT::translate(std::string code, std::set<std::string> headerpaths, std::set<std::string> librarypaths,
-                        std::set<std::string> libraries, std::string &error, bool debug)
+                        std::set<std::string> libraries, std::string &error, bool debug, size_t *code_size)
 {
 
     TCCState *s = tcc_new();
@@ -160,7 +160,8 @@ void *TCCJIT::translate(std::string code, std::set<std::string> headerpaths, std
             return 0;
         }
     }
-
+    if(code_size)
+        *code_size = tcc_relocate(s, nullptr);
     /* relocate the code */
     if (tcc_relocate(s, TCC_RELOCATE_AUTO) < 0)
     { // link

@@ -52,7 +52,7 @@ class GCCJIT : public etiss::JIT
     GCCJIT(bool cleanup = true);
     virtual ~GCCJIT();
     virtual void *translate(std::string code, std::set<std::string> headerpaths, std::set<std::string> librarypaths,
-                            std::set<std::string> libraries, std::string &error, bool debug = false);
+                            std::set<std::string> libraries, std::string &error, bool debug = false, size_t *code_size = 0);
     virtual void *getFunction(void *handle, std::string name, std::string &error);
     virtual void free(void *handle);
 

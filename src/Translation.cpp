@@ -42,6 +42,7 @@
 
 #include "etiss/Translation.h"
 #include <mutex>
+#include <jitprofiling.h>
 
 namespace etiss
 {
@@ -388,8 +389,10 @@ BlockLink *Translation::getBlock(BlockLink *prev, const etiss::uint64 &instructi
 #define ETISS_DEBUG 1
 #endif
     // compile library
+    size_t code_size = 0;
+
     void *funcs =
-        jit_->translate(code, headers, libloc, libs, error, etiss::cfg().get<bool>("jit-debug", ETISS_DEBUG) != 0);
+        jit_->translate(code, headers, libloc, libs, error, etiss::cfg().get<bool>("jit-debug", ETISS_DEBUG) != 0, &code_size);
 
     if (funcs == 0)
     {
@@ -408,6 +411,17 @@ BlockLink *Translation::getBlock(BlockLink *prev, const etiss::uint64 &instructi
         ExecBlockCall execBlock = (ExecBlockCall)jit_->getFunction(lib.get(), blockfunctionname.c_str(), error);
         if (execBlock != 0)
         {
+            if (iJIT_IsProfilingActive())
+                std::cout << "registering " << blockfunctionname << " with vtune jit api" << std::endl;
+            
+            iJIT_Method_Load ml = {0};
+            ml.method_id = iJIT_GetNewMethodID();
+            ml.method_name = const_cast<char *>(blockfunctionname.c_str());
+            ml.method_load_address = (void *)execBlock;
+            ml.method_size = code_size;     
+
+            iJIT_NotifyEvent(iJVM_EVENT_TYPE_METHOD_LOAD_FINISHED, (void*)&ml);
+
             BlockLink *nbl = new BlockLink(block.startindex_, block.endaddress_, execBlock, lib);
             uint64 ii9 = instructionindex >> 9;
             do
