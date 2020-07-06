@@ -385,6 +385,15 @@ BlockLink *Translation::getBlock(BlockLink *prev, const etiss::uint64 &instructi
             std::cout << "Code file " << count << std::endl;
     }
     */
+
+   std::stringstream ss;
+   ss << blockfunctionname << ".c";
+   std::ofstream os;
+   os.open(ss.str());
+   os << code;
+   os.close();
+
+
 #ifndef ETISS_DEBUG
 #define ETISS_DEBUG 1
 #endif
@@ -413,15 +422,16 @@ BlockLink *Translation::getBlock(BlockLink *prev, const etiss::uint64 &instructi
         {
             if (iJIT_IsProfilingActive())
                 std::cout << "registering " << blockfunctionname << " with vtune jit api" << std::endl;
-            
+            /*
             iJIT_Method_Load ml = {0};
             ml.method_id = iJIT_GetNewMethodID();
             ml.method_name = const_cast<char *>(blockfunctionname.c_str());
             ml.method_load_address = (void *)execBlock;
             ml.method_size = code_size;     
+            ml.source_file_name = const_cast<char *>((blockfunctionname + ".c").c_str());
 
             iJIT_NotifyEvent(iJVM_EVENT_TYPE_METHOD_LOAD_FINISHED, (void*)&ml);
-
+            */
             BlockLink *nbl = new BlockLink(block.startindex_, block.endaddress_, execBlock, lib);
             uint64 ii9 = instructionindex >> 9;
             do
