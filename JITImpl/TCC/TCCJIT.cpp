@@ -46,6 +46,7 @@
 
 #include "libtcc.h"
 #include <sstream>
+#include <fstream>
 #include "dlfcn.h"
 
 #if ETISS_USE_GETPROC
@@ -123,6 +124,13 @@ void *TCCJIT::translate(std::string code, std::set<std::string> headerpaths, std
         return 0;
     }
 
+    std::stringstream ss;
+    ss << "./code_" << code_num << ".c";
+    std::ofstream os;
+    os.open(ss.str());
+    os << code;
+    os.close();
+
     // if tcclib.h and libtcc1.a are not installed, where can we find them
     tcc_set_lib_path(s, (etiss::jitFiles() + "/tcc").c_str());
     tcc_set_options(s, "-g");
@@ -169,7 +177,9 @@ void *TCCJIT::translate(std::string code, std::set<std::string> headerpaths, std
         }
     }
 
-    std::stringstream ss;
+    ss.clear();
+    ss.str("");
+    
     ss << "./code_" << code_num++ << ".so";
     tcc_output_file(s, ss.str().c_str());
     tcc_delete(s);

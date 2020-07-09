@@ -386,14 +386,6 @@ BlockLink *Translation::getBlock(BlockLink *prev, const etiss::uint64 &instructi
     }
     */
 
-   std::stringstream ss;
-   ss << blockfunctionname << ".c";
-   std::ofstream os;
-   os.open(ss.str());
-   os << code;
-   os.close();
-
-
 #ifndef ETISS_DEBUG
 #define ETISS_DEBUG 1
 #endif
