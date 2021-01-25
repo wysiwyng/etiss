@@ -4,13 +4,13 @@ on: [push, pull_request]
 
 env:
   BUILD_TYPE: Release
-
+#
 jobs:
   build:
     strategy:
       matrix:
         config:
-          - {name: "Linux", os: ubuntu-latest, cmakegen: "", jit: "clang+llvm-11.0.0-x86_64-linux-gnu-ubuntu-16.04", jit-ext: ".tar.xz", tc: "riscv64-unknown-elf-gcc-8.3.0-2020.04.0-x86_64-linux-ubuntu14", tc-ext: ".tar.gz", unpack: "tar xf"}
+          - {name: "Linux", os: ubuntu-latest, cmakegen: "", jit: "clang+llvm-11.0.0-x86_64-linux-gnu-ubuntu-20.04", jit-ext: ".tar.xz", tc: "riscv64-unknown-elf-gcc-8.3.0-2020.04.0-x86_64-linux-ubuntu14", tc-ext: ".tar.gz", unpack: "tar xf"}
           - {name: "Windows", os: windows-latest, cmakegen: "-G \"MinGW Makefiles\"", jit: "LLVM-11.0.0-win64", jit-ext: ".exe", tc: "riscv64-unknown-elf-gcc-8.3.0-2020.04.0-x86_64-w64-mingw32", tc-ext: ".zip", unpack: "unzip"}
           - {name: "Mac", os: macOS-latest, cmakegen: "", jit: "clang+llvm-11.0.0-x86_64-apple-darwin", jit-ext: ".tar.xz", tc: "riscv64-unknown-elf-gcc-8.3.0-2020.04.0-x86_64-apple-darwin", tc-ext: ".tar.gz", unpack: "tar xf"}
 
