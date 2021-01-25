@@ -43,7 +43,7 @@ jobs:
       working-directory: ${{runner.workspace}}
       shell: bash
       run: |
-        wget https://releases.llvm.org/11.0.0/${{ matrix.config.jit }}${{ matrix.config.jit-ext }}
+        wget https://github.com/llvm/llvm-project/releases/download/llvmorg-11.0.0/${{ matrix.config.jit }}${{ matrix.config.jit-ext }}
         ${{ matrix.config.unpack }} ${{ matrix.config.jit }}${{ matrix.config.jit-ext }}
         mv ${{ matrix.config.jit }} llvm-lib
 
