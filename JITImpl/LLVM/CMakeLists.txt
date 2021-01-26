@@ -88,13 +88,10 @@ IF(LLVM_FOUND)
     )
     ETISSPlugin(${PROJECT_NAME})
 
-
-
-    if(ETISS_LLVM_DYLIB)
-        target_link_libraries(${PROJECT_NAME} PUBLIC clang-cpp)
-        target_link_libraries(${PROJECT_NAME} PUBLIC LLVM)
+    if(ETISS_CLANG_DYLIB)
+        target_link_libraries(${PROJECT_NAME} PRIVATE clang-cpp)
     else()
-        target_link_libraries(${PROJECT_NAME} PUBLIC
+        target_link_libraries(${PROJECT_NAME} PRIVATE
             clangCodeGen
             clangFrontend
             clangSerialization
@@ -107,7 +104,12 @@ IF(LLVM_FOUND)
             clangLex
             clangBasic
         )
-        target_link_libraries(${PROJECT_NAME} PUBLIC ${LLVM_LIBS})
+    endif()
+
+    if(ETISS_LLVM_DYLIB)
+        target_link_libraries(${PROJECT_NAME} PRIVATE LLVM)
+    else()
+        target_link_libraries(${PROJECT_NAME} PRIVATE ${LLVM_LIBS})
     endif()
 
     TARGET_INCLUDE_DIRECTORIES(${PROJECT_NAME} PUBLIC include ${LLVM_INCLUDE_DIRS})
