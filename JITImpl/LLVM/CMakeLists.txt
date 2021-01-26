@@ -36,6 +36,8 @@
 
 PROJECT(LLVMJIT)
 
+option(ETISS_LLVM_DYLIB "Link LLVM/Clang as dynamic libraries instead of static" OFF)
+
 IF(NOT DEFINED ENV{LLVM_DIR})
     SET(ENV{LLVM_DIR} "/opt/clang+llvm-11.0.0-x86_64-linux-gnu-ubuntu-20.04")
 ENDIF()
@@ -85,19 +87,28 @@ IF(LLVM_FOUND)
         src/LLVMJIT.cpp
     )
     ETISSPlugin(${PROJECT_NAME})
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME} PUBLIC
-        clangCodeGen
-        clangFrontend
-        clangSerialization
-        clangDriver
-        clangParse
-        clangSema
-        clangAnalysis
-        clangEdit
-        clangAST
-        clangLex
-        clangBasic
-        ${LLVM_LIBS}
+
+
+
+    if(ETISS_LLVM_DYLIB)
+        target_link_libraries(${PROJECT_NAME} PUBLIC clang-cpp)
+        target_link_libraries(${PROJECT_NAME} PUBLIC LLVM)
+    else()
+        target_link_libraries(${PROJECT_NAME} PUBLIC
+            clangCodeGen
+            clangFrontend
+            clangSerialization
+            clangDriver
+            clangParse
+            clangSema
+            clangAnalysis
+            clangEdit
+            clangAST
+            clangLex
+            clangBasic
         )
+        target_link_libraries(${PROJECT_NAME} PUBLIC ${LLVM_LIBS})
+    endif()
+
     TARGET_INCLUDE_DIRECTORIES(${PROJECT_NAME} PUBLIC include ${LLVM_INCLUDE_DIRS})
 ENDIF()
