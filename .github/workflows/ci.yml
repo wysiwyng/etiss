@@ -79,6 +79,7 @@ jobs:
 
     - name: Setup tests
       working-directory: ${{runner.workspace}}/install/examples
+      if: matrix.config.name == 'Linux'
       run: |
         cmake -E make_directory ${{runner.workspace}}/install/examples/SW/riscv/build
         cd SW/riscv/build

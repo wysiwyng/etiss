@@ -49,6 +49,8 @@
         @detail
 
 */
+#include <fstream>
+
 #include "etiss/CPUCore.h"
 #include "etiss/ETISS.h"
 
@@ -841,12 +843,29 @@ loopexit:
         cor_plugin->executionEnd(exception);
     }
 
+    double cpuTime = cpu_->cpuTime_ps / 1.0e12;
+    double simTime = endTime - startTime;
+    double cpuCycles = (double)cpu_->cpuTime_ps / (double)cpu_->cpuCycleTime_ps;
+    double cpuMips = cpuCycles / simTime / 1.0E6;
+
     // print some statistics
-    std::cout << "CPU Time: " << (cpu_->cpuTime_ps / 1.0E12) << "s    Simulation Time: " << (endTime - startTime) << "s"
-              << std::endl;
-    std::cout << "CPU Cycles (estimated): " << (cpu_->cpuTime_ps / (float)cpu_->cpuCycleTime_ps) << std::endl;
-    std::cout << "MIPS (estimated): "
-              << (cpu_->cpuTime_ps / (float)cpu_->cpuCycleTime_ps / (endTime - startTime) / 1.0E6) << std::endl;
+    std::cout << "CPU Time: " << cpuTime << "s    Simulation Time: " << simTime << "s" << std::endl;
+    std::cout << "CPU Cycles (estimated): " << cpuCycles << std::endl;
+    std::cout << "MIPS (estimated): " << cpuMips << std::endl;
+
+    if (etiss::cfg().get<bool>("json-stats", false)) {
+        std::ofstream jsonFile("cpu_stats.json");
+
+        jsonFile << "{" << std::endl;
+        jsonFile << "\t" << "\"cpu_time\": " << cpuTime << "," << std::endl;
+        jsonFile << "\t" << "\"sim_time\": " << simTime << "," << std::endl;
+        jsonFile << "\t" << "\"cpu_cycles\": " << cpuCycles << "," << std::endl;
+        jsonFile << "\t" << "\"cpu_mips\": " << cpuMips << std::endl;
+        jsonFile << "}" << std::endl;
+
+        jsonFile.close();
+    }
+
     etiss_uint64 max = 0;
     for (int i = 0; i < ETISS_MAX_RESOURCES; i++)
     {
