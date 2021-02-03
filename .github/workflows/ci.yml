@@ -121,3 +121,42 @@ jobs:
         ./run_helper.sh ../SW/riscv_cpp/build/riscv_example llvm
         ./run_helper.sh ../SW/riscv/build64/riscv_example
         ./run_helper.sh ../SW/riscv_cpp/build64/riscv_example
+
+    - name: Setup Benchmarks
+      working-directory: ${{runner.workspace}}/install/examples
+      if: matrix.config.name == 'Linux'
+      run: |
+        cmake -E make_directory ${{runner.workspace}}/install/examples/SW/riscv_dhry/build
+        cd SW/riscv/build
+        cmake .. -DRISCV_ELF_GCC_PREFIX=../../../../../riscv-tc -DRISCV_ELF_GCC_BASENAME=riscv64-unknown-elf
+        cmake --build . --config $BUILD_TYPE
+        cd -
+        cmake -E make_directory ${{runner.workspace}}/install/examples/SW/riscv_dhry/build64
+        cd SW/riscv/build64
+        cmake .. -DRISCV_ELF_GCC_PREFIX=../../../../../riscv-tc -DRISCV_ELF_GCC_BASENAME=riscv64-unknown-elf -DRISCV_ARCH=rv64gc -DRISCV_ABI=lp64d
+        cmake --build . --config $BUILD_TYPE
+
+    - name: Run Benchmarks
+      working-directory: ${{runner.workspace}}/install/examples/bare_etiss_processor
+      if: matrix.config.name == 'Linux'
+      run: |
+        ./run_helper.sh ../SW/riscv_dhry/build/riscv_example
+        mv cpu_stats.json cpu_stats_rv32_tcc.json
+        ./run_helper.sh ../SW/riscv_dhry/build/riscv_example gcc
+        mv cpu_stats.json cpu_stats_rv32_gcc.json
+        ./run_helper.sh ../SW/riscv_dhry/build/riscv_example llvm
+        mv cpu_stats.json cpu_stats_rv32_llvm.json
+        ./run_helper.sh ../SW/riscv_dhry/build64/riscv_example
+        mv cpu_stats.json cpu_stats_rv64_tcc.json
+        ./run_helper.sh ../SW/riscv_dhry/build64/riscv_example gcc
+        mv cpu_stats.json cpu_stats_rv64_gcc.json
+        ./run_helper.sh ../SW/riscv_dhry/build64/riscv_example llvm
+        mv cpu_stats.json cpu_stats_rv64_llvm.json
+
+    - name: Save Benchmark Results
+      working-directory: ${{runner.workspace}}/install/examples/bare_etiss_processor
+      if: matrix.config.name == 'Linux'
+      uses: actions/upload-artifact@v2
+      with:
+        name: benchmark_results
+        path: ./*.json
