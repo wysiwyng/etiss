@@ -109,7 +109,6 @@ jobs:
 
     - name: Test (Linux/Mac)
       working-directory: ${{runner.workspace}}/install/examples/bare_etiss_processor
-      #if: matrix.config.name == 'Linux' || matrix.config.name == 'Mac'
       if: matrix.config.name == 'Linux'
       shell: bash
       run: |
