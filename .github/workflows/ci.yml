@@ -153,9 +153,8 @@ jobs:
         mv cpu_stats.json cpu_stats_rv64_llvm.json
 
     - name: Save Benchmark Results
-      working-directory: ${{runner.workspace}}/install/examples/bare_etiss_processor
       if: matrix.config.name == 'Linux'
       uses: actions/upload-artifact@v2
       with:
         name: benchmark_results
-        path: ./*.json
+        path: ./install/examples/bare_etiss_processor/*.json
