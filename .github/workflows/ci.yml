@@ -145,12 +145,6 @@ jobs:
         mv cpu_stats.json cpu_stats_rv32_gcc.json
         ./run_helper.sh ../SW/riscv_dhry/build/riscv_example llvm
         mv cpu_stats.json cpu_stats_rv32_llvm.json
-        ./run_helper.sh ../SW/riscv_dhry/build64/riscv_example
-        mv cpu_stats.json cpu_stats_rv64_tcc.json
-        ./run_helper.sh ../SW/riscv_dhry/build64/riscv_example gcc
-        mv cpu_stats.json cpu_stats_rv64_gcc.json
-        ./run_helper.sh ../SW/riscv_dhry/build64/riscv_example llvm
-        mv cpu_stats.json cpu_stats_rv64_llvm.json
 
     - name: Save Benchmark Results
       if: matrix.config.name == 'Linux'
