@@ -136,7 +136,7 @@ jobs:
     - name: Upload Compiled System
       uses: actions/upload-artifact@v2
       with:
-        name: etiss.tar
+        name: etiss-${{matrix.config.name}}.tar
         path: ${{runner.workspace}}/etiss.tar
 
   test:
@@ -155,7 +155,7 @@ jobs:
     - name: Fetch Compiled System
       uses: actions/download-artifact@v2
       with:
-        name: etiss.tar
+        name: etiss-${{matrix.config.name}}.tar
         path: ${{runner.workspace}}
 
     - name: Unpack Compiled System
@@ -189,7 +189,7 @@ jobs:
     - name: Fetch Compiled System
       uses: actions/download-artifact@v2
       with:
-        name: etiss.tar
+        name: etiss-Linux.tar
         path: ${{runner.workspace}}
 
     - name: Unpack Compiled System
@@ -205,5 +205,5 @@ jobs:
     - name: Save Benchmark Results
       uses: actions/upload-artifact@v2
       with:
-        name: benchmark_results
-        path: ${{runner.workspace}}/install/examples/bare_etiss_processor/*.json
+        name: cpu_stats_rv32_${{matrix.jit-engine}}_${{matrix.run_no}}.json
+        path: ${{runner.workspace}}/install/examples/bare_etiss_processor/cpu_stats_rv32_${{matrix.jit-engine}}_${{matrix.run_no}}.json
