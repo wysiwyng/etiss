@@ -130,12 +130,14 @@ jobs:
         cmake .. -DRISCV_ELF_GCC_PREFIX=../../../../../riscv-tc -DRISCV_ELF_GCC_BASENAME=riscv64-unknown-elf -DRISCV_ARCH=rv64gc -DRISCV_ABI=lp64d
         cmake --build . --config $BUILD_TYPE
 
-    - name: Save Compiled System
-      if: matrix.config.name == 'Linux'
+    - name: Compress Compiled System
+      run: tar -cvf ${{runner.workspace}}/etiss.tar ${{runner.workspace}}/install
+
+    - name: Upload Compiled System
       uses: actions/upload-artifact@v2
       with:
-        name: etiss_bin
-        path: ${{runner.workspace}}/install
+        name: etiss.tar
+        path: ${{runner.workspace}}/etiss.tar
 
   test:
     strategy:
@@ -151,11 +153,12 @@ jobs:
 
     steps:
     - name: Fetch Compiled System
-      if: matrix.config.name == 'Linux'
       uses: actions/download-artifact@v2
       with:
-        name: etiss_bin
-        path: ${{runner.workspace}}/install
+        name: etiss.tar
+
+    - name: Unpack Compiled System
+      run: tar -xf etiss.tar
 
     - name: test
       run: |
@@ -191,8 +194,10 @@ jobs:
     - name: Fetch Compiled System
       uses: actions/download-artifact@v2
       with:
-        name: etiss_bin
-        path: ${{runner.workspace}}/install
+        name: etiss.tar
+
+    - name: Unpack Compiled System
+      run: tar -xf etiss.tar
 
     - name: Run Benchmarks
       working-directory: ${{runner.workspace}}/install/examples/bare_etiss_processor
