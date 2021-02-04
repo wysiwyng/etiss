@@ -63,8 +63,8 @@ jobs:
 
     - name: Save number of CPU cores
       run: |
-        echo ${{ steps.cpu-count.outputs.count }}
-        echo "CMAKE_BUILD_PARALLEL_LEVEL=${{ steps.cpu-cores.outputs.count }}"" >> $GITHUB_ENV
+        echo ${{ steps.cpu-cores.outputs.count }}
+        echo "CMAKE_BUILD_PARALLEL_LEVEL=${{ steps.cpu-cores.outputs.count }}" >> $GITHUB_ENV
 
     - name: Create Build Environment
       run: cmake -E make_directory ${{runner.workspace}}/build
