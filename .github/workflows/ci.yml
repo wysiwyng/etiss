@@ -131,7 +131,7 @@ jobs:
         cmake --build . --config $BUILD_TYPE
 
     - name: Compress Compiled System
-      run: tar -cvf ${{runner.workspace}}/etiss.tar install
+      run: tar -C ${{runner.workspace}} -cvf ${{runner.workspace}}/etiss.tar install
 
     - name: Upload Compiled System
       uses: actions/upload-artifact@v2
