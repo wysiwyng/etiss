@@ -155,6 +155,8 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: etiss_bin
+        path: ${{runner.workspace}}/install
+
     - name: test
       run: |
         pwd
@@ -190,6 +192,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: etiss_bin
+        path: ${{runner.workspace}}/install
 
     - name: Run Benchmarks
       working-directory: ${{runner.workspace}}/install/examples/bare_etiss_processor
