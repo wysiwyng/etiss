@@ -23,7 +23,7 @@ jobs:
     - name: Requirements (Linux)
       if: matrix.config.name == 'Linux'
       run: |
-        sudo apt-get install -y wget libboost-system-dev libboost-filesystem-dev libboost-program-options-dev
+        sudo apt-get install -y wget libboost-system-dev libboost-filesystem-dev libboost-program-options-dev cmake build-essential g++
 
     - name: Requirements (Windows)
       if: matrix.config.name == 'Windows'
