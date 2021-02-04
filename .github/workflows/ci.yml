@@ -162,13 +162,6 @@ jobs:
       working-directory: ${{runner.workspace}}
       run: tar -xf etiss.tar
 
-    - name: test
-      run: |
-        pwd
-        ls -la
-        ls -la ${{runner.workspace}}
-        ls -la ${{runner.workspace}}/install
-
     - name: Test (Linux/Mac)
       working-directory: ${{runner.workspace}}/install/examples/bare_etiss_processor
       if: matrix.config.name == 'Linux'
@@ -197,8 +190,10 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: etiss.tar
+        path: ${{runner.workspace}}
 
     - name: Unpack Compiled System
+      working-directory: ${{runner.workspace}}
       run: tar -xf etiss.tar
 
     - name: Run Benchmarks
