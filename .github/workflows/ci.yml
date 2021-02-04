@@ -10,9 +10,9 @@ jobs:
     strategy:
       matrix:
         config:
-          - {name: "Linux", os: self-hosted, cmakegen: "", llvm: "linux-gnu-ubuntu-20.04", llvm-ext: ".tar.xz", tc: "linux-ubuntu14", tc-ext: ".tar.gz", unpack: "tar xf"}
-          #- {name: "Windows", os: windows-latest, cmakegen: "-G \"MinGW Makefiles\"", llvm: "", llvm-ext: "", tc: "w64-mingw32", tc-ext: ".zip", unpack: "unzip"}
-          #- {name: "Mac", os: macOS-latest, cmakegen: "", llvm: "apple-darwin", llvm-ext: ".tar.xz", tc: "apple-darwin", tc-ext: ".tar.gz", unpack: "tar xf"}
+          - {name: "Linux", os: ubuntu-20.04, cmakegen: "", llvm: "linux-gnu-ubuntu-20.04", llvm-ext: ".tar.xz", tc: "linux-ubuntu14", tc-ext: ".tar.gz", unpack: "tar xf"}
+          - {name: "Windows", os: windows-latest, cmakegen: "-G \"MinGW Makefiles\"", llvm: "", llvm-ext: "", tc: "w64-mingw32", tc-ext: ".zip", unpack: "unzip"}
+          - {name: "Mac", os: macOS-latest, cmakegen: "", llvm: "apple-darwin", llvm-ext: ".tar.xz", tc: "apple-darwin", tc-ext: ".tar.gz", unpack: "tar xf"}
 
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.name }}
@@ -23,7 +23,7 @@ jobs:
     - name: Requirements (Linux)
       if: matrix.config.name == 'Linux'
       run: |
-        sudo apt-get install -y wget libboost-system-dev libboost-filesystem-dev libboost-program-options-dev cmake build-essential g++ libtinfo-dev zlib1g-dev
+        sudo apt-get install -y libboost-system-dev libboost-filesystem-dev libboost-program-options-dev cmake build-essential g++ libtinfo-dev zlib1g-dev wget
 
     - name: Requirements (Windows)
       if: matrix.config.name == 'Windows'
@@ -74,7 +74,7 @@ jobs:
       working-directory: ${{runner.workspace}}/build
       run: |
         export LLVM_DIR=${{runner.workspace}}/llvm-lib
-        cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=../install
+        cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=${{runner.workspace}}/install
 
     - name: Build
       working-directory: ${{runner.workspace}}/build
@@ -116,20 +116,6 @@ jobs:
         cmake ..
         cmake --build . --config $BUILD_TYPE
 
-    - name: Test (Linux/Mac)
-      working-directory: ${{runner.workspace}}/install/examples/bare_etiss_processor
-      if: matrix.config.name == 'Linux'
-      shell: bash
-      run: |
-        ./run_helper.sh ../SW/riscv/build/riscv_example
-        ./run_helper.sh ../SW/riscv/build/riscv_example gcc
-        ./run_helper.sh ../SW/riscv/build/riscv_example llvm
-        ./run_helper.sh ../SW/riscv_cpp/build/riscv_example
-        ./run_helper.sh ../SW/riscv_cpp/build/riscv_example gcc
-        ./run_helper.sh ../SW/riscv_cpp/build/riscv_example llvm
-        ./run_helper.sh ../SW/riscv/build64/riscv_example
-        ./run_helper.sh ../SW/riscv_cpp/build64/riscv_example
-
     - name: Setup Benchmarks
       working-directory: ${{runner.workspace}}/install/examples
       if: matrix.config.name == 'Linux'
@@ -144,19 +130,68 @@ jobs:
         cmake .. -DRISCV_ELF_GCC_PREFIX=../../../../../riscv-tc -DRISCV_ELF_GCC_BASENAME=riscv64-unknown-elf -DRISCV_ARCH=rv64gc -DRISCV_ABI=lp64d
         cmake --build . --config $BUILD_TYPE
 
-    - name: Run Benchmarks
+    - name: Save Compiled System
+      if: matrix.config.name == 'Linux'
+      uses: actions/upload-artifact@v2
+      with:
+        name: etiss_bin
+        path: ${{runner.workspace}}/install
+
+  test:
+    strategy:
+      matrix:
+        config:
+          - {name: "Linux", os: ubuntu-20.04, cmakegen: "", llvm: "linux-gnu-ubuntu-20.04", llvm-ext: ".tar.xz", tc: "linux-ubuntu14", tc-ext: ".tar.gz", unpack: "tar xf"}
+          - {name: "Windows", os: windows-latest, cmakegen: "-G \"MinGW Makefiles\"", llvm: "", llvm-ext: "", tc: "w64-mingw32", tc-ext: ".zip", unpack: "unzip"}
+          - {name: "Mac", os: macOS-latest, cmakegen: "", llvm: "apple-darwin", llvm-ext: ".tar.xz", tc: "apple-darwin", tc-ext: ".tar.gz", unpack: "tar xf"}
+
+    depends-on: build
+    runs-on: ${{ matrix.config.os }}
+    name: ${{ matrix.config.name }}
+
+    steps:
+    - name: Fetch Compiled System
+      if: matrix.config.name == 'Linux'
+      uses: actions/download-artifact@v2
+      with:
+        name: etiss_bin
+
+    - name: Test (Linux/Mac)
       working-directory: ${{runner.workspace}}/install/examples/bare_etiss_processor
       if: matrix.config.name == 'Linux'
+      shell: bash
       run: |
-        ./run_helper.sh ../SW/riscv_dhry/build/riscv_example
-        mv cpu_stats.json cpu_stats_rv32_tcc.json
-        ./run_helper.sh ../SW/riscv_dhry/build/riscv_example gcc
-        mv cpu_stats.json cpu_stats_rv32_gcc.json
-        ./run_helper.sh ../SW/riscv_dhry/build/riscv_example llvm
-        mv cpu_stats.json cpu_stats_rv32_llvm.json
+        ./run_helper.sh ../SW/riscv/build/riscv_example
+        ./run_helper.sh ../SW/riscv/build/riscv_example gcc
+        ./run_helper.sh ../SW/riscv/build/riscv_example llvm
+        ./run_helper.sh ../SW/riscv_cpp/build/riscv_example
+        ./run_helper.sh ../SW/riscv_cpp/build/riscv_example gcc
+        ./run_helper.sh ../SW/riscv_cpp/build/riscv_example llvm
+        ./run_helper.sh ../SW/riscv/build64/riscv_example
+        ./run_helper.sh ../SW/riscv_cpp/build64/riscv_example
+
+  benchmark:
+    strategy:
+      matrix:
+        run-no: [1, 2, 3, 4, 5]
+        jit-engine: ["", "gcc", "llvm"]
+
+    depends-on: build
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Fetch Compiled System
+      uses: actions/download-artifact@v2
+      with:
+        name: etiss_bin
+
+    - name: Run Benchmarks
+      working-directory: ${{runner.workspace}}/install/examples/bare_etiss_processor
+      run: |
+        ./run_helper.sh ../SW/riscv_dhry/build/riscv_example ${{matrix.jit-engine}}
+        mv cpu_stats.json cpu_stats_rv32_${{matrix.jit-engine}}_${{matrix.run_no}}.json
 
     - name: Save Benchmark Results
-      if: matrix.config.name == 'Linux'
       uses: actions/upload-artifact@v2
       with:
         name: benchmark_results
