@@ -180,7 +180,7 @@ jobs:
     strategy:
       matrix:
         run-no: [1, 2, 3, 4, 5]
-        jit-engine: ["", "gcc", "llvm"]
+        jit-engine: ["tcc", "gcc", "llvm"]
 
     needs: build
     runs-on: ubuntu-20.04

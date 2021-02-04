@@ -69,6 +69,8 @@ do
         JIT="GCCJIT"
     elif [ "$arg" = "llvm" ]; then
         JIT="LLVMJIT"
+    elif [ "$arg" = "tcc" ]; then
+        JIT="TCCJIT"
     elif [ "$arg" = "vp" ]; then
         VP_EXE="$2"
         shift
