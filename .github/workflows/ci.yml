@@ -10,9 +10,9 @@ jobs:
     strategy:
       matrix:
         config:
-          - {name: "Linux", os: ubuntu-latest, cmakegen: "", llvm: "linux-gnu-ubuntu-20.04", llvm-ext: ".tar.xz", tc: "linux-ubuntu14", tc-ext: ".tar.gz", unpack: "tar xf"}
-          - {name: "Windows", os: windows-latest, cmakegen: "-G \"MinGW Makefiles\"", llvm: "", llvm-ext: "", tc: "w64-mingw32", tc-ext: ".zip", unpack: "unzip"}
-          - {name: "Mac", os: macOS-latest, cmakegen: "", llvm: "apple-darwin", llvm-ext: ".tar.xz", tc: "apple-darwin", tc-ext: ".tar.gz", unpack: "tar xf"}
+          - {name: "Linux", os: self-hosted, cmakegen: "", llvm: "linux-gnu-ubuntu-20.04", llvm-ext: ".tar.xz", tc: "linux-ubuntu14", tc-ext: ".tar.gz", unpack: "tar xf"}
+          #- {name: "Windows", os: windows-latest, cmakegen: "-G \"MinGW Makefiles\"", llvm: "", llvm-ext: "", tc: "w64-mingw32", tc-ext: ".zip", unpack: "unzip"}
+          #- {name: "Mac", os: macOS-latest, cmakegen: "", llvm: "apple-darwin", llvm-ext: ".tar.xz", tc: "apple-darwin", tc-ext: ".tar.gz", unpack: "tar xf"}
 
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.name }}
@@ -56,6 +56,15 @@ jobs:
         wget https://static.dev.sifive.com/dev-tools/$TC_NAME${{ matrix.config.tc-ext }}
         ${{ matrix.config.unpack }} $TC_NAME${{ matrix.config.tc-ext }}
         mv $TC_NAME riscv-tc
+
+    - name: Get number of CPU cores
+      id: cpu-cores
+      uses: SimenB/github-actions-cpu-cores@v1
+
+    - name: Save number of CPU cores
+      run: |
+        echo ${{ steps.cpu-count.outputs.count }}
+        echo "CMAKE_BUILD_PARALLEL_LEVEL=${{ steps.cpu-count.outputs.count }}"" >> $GITHUB_ENV
 
     - name: Create Build Environment
       run: cmake -E make_directory ${{runner.workspace}}/build
