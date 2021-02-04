@@ -156,7 +156,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: etiss.tar
-        path: ${{runner.workspace}}/etiss.tar
+        path: ${{runner.workspace}}
 
     - name: Unpack Compiled System
       working-directory: ${{runner.workspace}}
