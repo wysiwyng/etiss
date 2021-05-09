@@ -1,0 +1,14 @@
+<map id="etiss::instr::BitArrayRange::read" name="etiss::instr::BitArrayRange::read">
+<area shape="rect" id="node1" title="reads bits from the range to the return value starting at the lsb." alt="" coords="1397,64,1589,105"/>
+<area shape="rect" id="node2" href="$classetiss_1_1instr_1_1Node.html#aab28e33efbc20386bc870f2ab046e5d7" title="called by InstructionSet::compile() calls Node::compile() of sub nodes" alt="" coords="1217,5,1349,47"/>
+<area shape="rect" id="node4" href="$classetiss_1_1instr_1_1Node.html#a62dbb3b5ca71ec98b434b4b0bcdc2c1e" title="performs a lookup for the matching Instruction for the passed instruction in the bit array." alt="" coords="1217,147,1349,188"/>
+<area shape="rect" id="node5" href="$classetiss_1_1instr_1_1OverlappedNode.html#ae8ff4b1edcaff1cbfa0ce5d8fd60481f" title="performs a lookup for the matching Instruction for the passed instruction in the bit array." alt="" coords="996,76,1169,117"/>
+<area shape="rect" id="node3" href="$classetiss_1_1instr_1_1InstructionSet.html#a6a44d207f9d2197a8cd064e47327ebd3" title=" " alt="" coords="999,5,1166,47"/>
+<area shape="rect" id="node6" href="$classetiss_1_1instr_1_1InstructionSet.html#a7ea2db8cdb5e83cae16b95bae0617a84" title=" " alt="" coords="999,147,1166,188"/>
+<area shape="rect" id="node7" href="$classetiss_1_1Translation.html#a129ecf66a99a82d1c5238e476f33a158" title=" " alt="" coords="816,113,948,155"/>
+<area shape="rect" id="node8" href="$classetiss_1_1Translation.html#abad861d5afddf612c910143718694c4c" title=" " alt="" coords="816,179,948,220"/>
+<area shape="rect" id="node9" href="$classetiss_1_1Translation.html#ad60fccfe679e82069b2255aac748ed52" title=" " alt="" coords="636,179,768,220"/>
+<area shape="rect" id="node10" href="$classetiss_1_1Translation.html#a8a71d620ec906f57f2f2dfc4c6565bd8" title="CALL THIS function NOT getBlock(...) since getBlock will not check next/branch references." alt="" coords="456,179,588,220"/>
+<area shape="rect" id="node11" href="$classetiss_1_1CPUCore.html#a3abad91e823939228f7db1596e040c19" title="Start the simulation of the CPU core for the system model." alt="" coords="231,186,408,213"/>
+<area shape="rect" id="node12" href="$classetiss_1_1CPUCore.html#a2ab7000206ed432b59457ce57b9182f6" title="Start the simulation of the CPU core for the system model." alt="" coords="5,186,183,213"/>
+</map>

@@ -1,0 +1,27 @@
+<map id="/home/runner/work/etiss/etiss/include/etiss/LibraryInterface.h" name="/home/runner/work/etiss/etiss/include/etiss/LibraryInterface.h">
+<area shape="rect" id="node1" title="class for simple library access. Libraries can be integrated or loaded at runtime fom a dynamic libra..." alt="" coords="2535,5,2727,61"/>
+<area shape="rect" id="node2" href="$build_2include_2etiss_2CPUCore_8h.html" title="defines main cpu core interface" alt="" coords="2530,518,2707,545"/>
+<area shape="rect" id="node3" href="$build_2include_2etiss_2ETISS_8h.html" title="Header file of the ETISS library." alt="" coords="993,317,1149,344"/>
+<area shape="rect" id="node4" href="$build_2include_2etiss_2InterruptHandler_8h.html" title="interrupt checking and signaling" alt="" coords="2668,124,2895,151"/>
+<area shape="rect" id="node5" href="$etiss_2include_2etiss_2CPUCore_8h.html" title="defines main cpu core interface" alt="" coords="1585,213,1801,255"/>
+<area shape="rect" id="node6" href="$etiss_2include_2etiss_2ETISS_8h.html" title="Header file of the ETISS library." alt="" coords="773,310,968,351"/>
+<area shape="rect" id="node21" href="$etiss_2include_2etiss_2InterruptHandler_8h.html" title="interrupt checking and signaling" alt="" coords="2313,109,2516,165"/>
+<area shape="rect" id="node23" href="$IntegratedLibrary_8cpp.html" title="example implementation of a dynamic library interface that is used to provide access to integrated pl..." alt="" coords="2919,117,3140,158"/>
+<area shape="rect" id="node24" href="$IntegratedLibraryHelper_8cpp.html" title="implements a LibraryInterface for the integrated library which is not loaded like other libraries but..." alt="" coords="3165,109,3361,165"/>
+<area shape="rect" id="node25" href="$LibraryInterface_8cpp.html" title="implements etiss/LibraryInterface.h and provides LibraryInterface implementation for shared/dynamic l..." alt="" coords="3385,117,3599,158"/>
+<area shape="rect" id="node10" href="$CPUCore_8cpp.html" title="implementation of etiss/CPUCore.h" alt="" coords="1373,414,1553,455"/>
+<area shape="rect" id="node15" href="$CPUArch_8cpp.html" title="implementation of etiss/CPUArch.h" alt="" coords="1481,310,1661,351"/>
+<area shape="rect" id="node16" href="$IntegratedLibrary_2errorInjection_2Plugin_8cpp.html" title="implementation of etiss/IntegratedLibrary/errorInjection/Plugin.h" alt="" coords="1685,303,1881,359"/>
+<area shape="rect" id="node17" href="$GDBServer_8cpp.html" title="implementation of etiss/IntegratedLibrary/gdb/GDBServer.h" alt="" coords="1905,303,2101,359"/>
+<area shape="rect" id="node18" href="$InstructionAccurateCallback_8cpp.html" title=" " alt="" coords="2125,303,2360,359"/>
+<area shape="rect" id="node19" href="$VariableValueLogger_8cpp.html" title=" " alt="" coords="2385,303,2581,359"/>
+<area shape="rect" id="node20" href="$MMU_8cpp.html" title="Modeling hardware memory management for virtual memory &#45;&gt; physical memory translation and protection...." alt="" coords="1225,310,1405,351"/>
+<area shape="rect" id="node7" href="$build_2include_2etiss_2mm_2DMMUWrapper_8h.html" title="Wrapper class to wrap aroud data MMU." alt="" coords="488,421,736,448"/>
+<area shape="rect" id="node8" href="$etiss_2include_2etiss_2mm_2DMMUWrapper_8h.html" title="Wrapper class to wrap aroud data MMU." alt="" coords="1169,407,1349,463"/>
+<area shape="rect" id="node11" href="$ETISS_8cpp.html" title="Implementation of etiss/ETISS.h except for etiss::preloadLibraries." alt="" coords="761,414,941,455"/>
+<area shape="rect" id="node12" href="$ETISSInit_8cpp.html" title="implementation of etiss::preloadLibraries" alt="" coords="965,414,1145,455"/>
+<area shape="rect" id="node13" href="$ETISSPython_8cpp.html" title=" " alt="" coords="5,414,197,455"/>
+<area shape="rect" id="node14" href="$PageFaultVector_8cpp.html" title=" " alt="" coords="221,414,464,455"/>
+<area shape="rect" id="node9" href="$DMMUWrapper_8cpp.html" title="Wrapper class to wrap aroud data MMU." alt="" coords="1139,511,1378,552"/>
+<area shape="rect" id="node22" href="$InterruptHandler_8cpp.html" title="implements etiss/InterruptHandler.h" alt="" coords="2414,213,2631,255"/>
+</map>

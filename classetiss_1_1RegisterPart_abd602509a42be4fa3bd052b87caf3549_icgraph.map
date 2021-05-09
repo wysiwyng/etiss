@@ -1,0 +1,13 @@
+<map id="etiss::RegisterPart::isEmpty" name="etiss::RegisterPart::isEmpty">
+<area shape="rect" id="node1" title="true if unnamed or no relevant bits" alt="" coords="897,155,1037,197"/>
+<area shape="rect" id="node2" href="$classetiss_1_1RegisterSet.html#a71f6c06c15ba6f84e449f243e38b28ff" title="add a registerPart to the set or just its relevant bits if a register with the same name is already p..." alt="" coords="681,64,849,91"/>
+<area shape="rect" id="node7" href="$classetiss_1_1RegisterPart.html#a54e494a9777aa0989f80fe07a9b77721" title="check if passed RegisterPart is a subset of relevant bits of the same register" alt="" coords="695,122,835,163"/>
+<area shape="rect" id="node9" href="$classetiss_1_1RegisterPart.html#a8cefce9cb315e106cd03dda5de3e2777" title="check for equality" alt="" coords="695,187,835,229"/>
+<area shape="rect" id="node11" href="$classetiss_1_1RegisterPart.html#ac5f4abe85129587bef2755c3e3613f39" title=" " alt="" coords="695,253,835,294"/>
+<area shape="rect" id="node3" href="$classetiss_1_1RegisterSet.html#a18a3beb4d218c762801477925ec6ac1d" title=" " alt="" coords="465,5,633,32"/>
+<area shape="rect" id="node4" href="$classetiss_1_1RegisterSet.html#a42cbfb25cad6fefa44a9955a36ae3ac1" title="any register bits set in the passed RegisterSet will be set in this RegisterSet (plus previously set ..." alt="" coords="481,57,617,98"/>
+<area shape="rect" id="node5" href="$classetiss_1_1CodeSet.html#aa97b442c28e90089675baf51e1c3d2cc" title=" " alt="" coords="228,57,417,98"/>
+<area shape="rect" id="node6" href="$classetiss_1_1CodeSet.html#a0612f86944cb92f9c042e4940c5fdbdc" title="writes the contained CodeParts as needed with respect to the given RegisterSet of bits that are not r..." alt="" coords="5,64,180,91"/>
+<area shape="rect" id="node8" href="$classetiss_1_1RegisterPart.html#ae0c2ab1d473d15c1dde0f3bb93102092" title=" " alt="" coords="479,122,619,163"/>
+<area shape="rect" id="node10" href="$classetiss_1_1RegisterPart.html#ae4e287d6a3d1bfd0f8a7edfec0745942" title="same as matches(const RegisterPart &amp; other)" alt="" coords="479,187,619,229"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="etiss::CodePart::code" name="etiss::CodePart::code">
+<area shape="rect" id="node1" title=" " alt="" coords="519,111,677,138"/>
+<area shape="rect" id="node2" href="$classetiss_1_1plugin_1_1InstructionAccurateCallback.html#a8e2f99eab05454fe3f848b8a2449338c" title="called after all instructions have been added to allow last changes" alt="" coords="231,5,471,47"/>
+<area shape="rect" id="node3" href="$classetiss_1_1plugin_1_1VariableValueLogger.html#ae78ddff9a4e6c535823404e79accdeb6" title="called after all instructions have been added to allow last changes" alt="" coords="251,71,450,112"/>
+<area shape="rect" id="node4" href="$classetiss_1_1DataSheetAccurateTiming.html#a31c30a45640628d306ca96b1fcc65cb9" title="simple template function that adds the given number of cycles to the cpu time if the related rule mat..." alt="" coords="247,136,454,177"/>
+<area shape="rect" id="node5" href="$GDBServer_8cpp.html#a8addabd4f79ea3ea37c5d5a180bddbb8" title=" " alt="" coords="267,202,435,229"/>
+<area shape="rect" id="node6" href="$classetiss_1_1plugin_1_1gdb_1_1Server.html#a81863c312386bc253ee9bd749d8c8ca0" title="called after all instructions have been added to allow last changes" alt="" coords="5,195,183,236"/>
+</map>

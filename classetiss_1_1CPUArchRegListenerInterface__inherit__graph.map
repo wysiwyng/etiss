@@ -1,0 +1,4 @@
+<map id="etiss::CPUArchRegListenerInterface" name="etiss::CPUArchRegListenerInterface">
+<area shape="rect" id="node1" title="allows to inform plugins about changes to a register that is present in the cpu structure." alt="" coords="5,5,200,47"/>
+<area shape="rect" id="node2" href="$classetiss_1_1CPUArch.html" title="the interface to translate instructions of and processor architecture" alt="" coords="44,95,161,121"/>
+</map>

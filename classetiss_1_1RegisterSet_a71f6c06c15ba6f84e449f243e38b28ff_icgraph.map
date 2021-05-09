@@ -1,0 +1,7 @@
+<map id="etiss::RegisterSet::add" name="etiss::RegisterSet::add">
+<area shape="rect" id="node1" title="add a registerPart to the set or just its relevant bits if a register with the same name is already p..." alt="" coords="681,35,849,61"/>
+<area shape="rect" id="node2" href="$classetiss_1_1RegisterSet.html#a18a3beb4d218c762801477925ec6ac1d" title=" " alt="" coords="465,5,633,32"/>
+<area shape="rect" id="node3" href="$classetiss_1_1RegisterSet.html#a42cbfb25cad6fefa44a9955a36ae3ac1" title="any register bits set in the passed RegisterSet will be set in this RegisterSet (plus previously set ..." alt="" coords="481,57,617,98"/>
+<area shape="rect" id="node4" href="$classetiss_1_1CodeSet.html#aa97b442c28e90089675baf51e1c3d2cc" title=" " alt="" coords="228,57,417,98"/>
+<area shape="rect" id="node5" href="$classetiss_1_1CodeSet.html#a0612f86944cb92f9c042e4940c5fdbdc" title="writes the contained CodeParts as needed with respect to the given RegisterSet of bits that are not r..." alt="" coords="5,64,180,91"/>
+</map>
