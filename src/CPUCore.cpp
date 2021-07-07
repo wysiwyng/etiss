@@ -51,6 +51,7 @@
 */
 #include "etiss/CPUCore.h"
 #include "etiss/ETISS.h"
+#include <iostream>
 
 using namespace etiss;
 
@@ -708,7 +709,7 @@ etiss::int32 CPUCore::execute(ETISS_System &_system)
 
     // start execution loop
 
-    float startTime = (float)clock() / CLOCKS_PER_SEC; // TESTING
+    double startTime = (double)clock() / CLOCKS_PER_SEC; // TESTING
 
     BlockLink *blptr = 0; // pointer to the current block
 
@@ -833,7 +834,7 @@ etiss::int32 CPUCore::execute(ETISS_System &_system)
 
 loopexit:
 
-    float endTime = (float)clock() / CLOCKS_PER_SEC;
+    double endTime = (double)clock() / CLOCKS_PER_SEC;
 
     // execute coroutines end
     for (auto &cor_plugin : cor_array)
@@ -842,11 +843,17 @@ loopexit:
     }
 
     // print some statistics
-    std::cout << "CPU Time: " << (cpu_->cpuTime_ps / 1.0E12) << "s    Simulation Time: " << (endTime - startTime) << "s"
+    double cpu_time = cpu_->cpuTime_ps / 1.0E12;
+    double sim_time = endTime - startTime;
+    double cpu_cycles = cpu_->cpuTime_ps / (double)cpu_->cpuCycleTime_ps;
+    double mips = cpu_cycles / sim_time / 1.0E6;
+
+    std::cout << "CPU Time: " << cpu_time << "s    Simulation Time: " << sim_time << "s"
               << std::endl;
-    std::cout << "CPU Cycles (estimated): " << (cpu_->cpuTime_ps / (float)cpu_->cpuCycleTime_ps) << std::endl;
+    std::cout << "CPU Cycles (estimated): " << cpu_cycles << std::endl;
     std::cout << "MIPS (estimated): "
-              << (cpu_->cpuTime_ps / (float)cpu_->cpuCycleTime_ps / (endTime - startTime) / 1.0E6) << std::endl;
+              << mips << std::endl;
+
     etiss_uint64 max = 0;
     for (int i = 0; i < ETISS_MAX_RESOURCES; i++)
     {
@@ -876,6 +883,18 @@ loopexit:
     etiss::log(etiss::INFO, std::string("MIPS (good estimation): ") +
                                 etiss::toString(instrcounter / ((double)cpu_->cpuTime_ps / 1000000.0)));
 #endif
+
+    // save statistics to json
+
+    if (etiss::cfg().isSet("vp.stats_file_path")) {
+        std::ofstream os(etiss::cfg().get<std::string>("vp.stats_file_path", ""));
+        os << "{" <<
+            "\"cpu_time\":" << cpu_time << "," <<
+            "\"sim_time\":" << sim_time << "," <<
+            "\"cpu_cycles\":" << cpu_cycles << "," <<
+            "\"mips\":" << mips << "}";
+        os.close();
+    }
 
     // cleanup plugins
     for (auto &p : plugins)
