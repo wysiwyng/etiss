@@ -2,6 +2,9 @@ import json
 import random
 import pathlib
 import sys
+import string
+
+from compare_perf import main
 
 RUNS = 5
 ENGINES = ["tcc", "llvm", "gcc"]
@@ -15,6 +18,8 @@ BASE_VALUES = {
 
 VARIATION = 0.1
 
+files = []
+
 for eng in ENGINES:
     for run in range(RUNS):
         var = random.random() * VARIATION * 2 - VARIATION + 1
@@ -23,4 +28,9 @@ for eng in ENGINES:
         fpath = pathlib.Path(f"stats_{eng}_{run}.json").resolve()
         with open(fpath, "w") as fp:
             print(fpath)
+            files.append(fpath)
             json.dump(values, fp)
+
+current_hash = ''.join(random.choices(string.hexdigits.lower(), k=8))
+
+main(files, "new_stats.json", current_hash)
