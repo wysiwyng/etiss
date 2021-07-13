@@ -888,6 +888,7 @@ loopexit:
 
     if (etiss::cfg().isSet("vp.stats_file_path")) {
         std::ofstream os(etiss::cfg().get<std::string>("vp.stats_file_path", ""));
+        os.precision(10);
         os << "{" <<
             "\"cpu_time\":" << cpu_time << "," <<
             "\"sim_time\":" << sim_time << "," <<
