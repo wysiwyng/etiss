@@ -8,16 +8,15 @@ from mako.template import Template
 
 KEY = "mips"
 TOLERANCE = 0.1
-MAX_HISTORY=10
+MAX_HISTORY = 10
 REPO_URL = "https://github.com/wysiwyng/etiss/tree"
 
 
 WIKI_TEMPLATE = '''# Performance statistics for commit ${current_hash}
+JIT Engine | Status | Current MIPS | Best MIPS | at commit
+---|---|---|---|---
 % for engine, stats in statss.items():
-## ${engine}:
-**Status:** ${messages[engine]}
-**Current dhrystone MIPS:** ${stats["mips"][-1]}<br/>
-**Previous best** (recorded in commit ${stats["best_hash"]})**:** ${stats["best_mips"]}
+${engine} | ${messages[engine]} | ${stats["mips"][-1][0]} | ${stats["best_mips"]} | ${stats["best_hash"]}
 % endfor
 '''
 
