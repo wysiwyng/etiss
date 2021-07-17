@@ -118,7 +118,7 @@ main ()
   {
     int n;
     /*scanf ("%d", &n);*/
-    Number_Of_Runs = 100000;
+    Number_Of_Runs = 10000000;
   }
   printf ("\n");
 
