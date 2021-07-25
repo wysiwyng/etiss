@@ -186,3 +186,38 @@ jobs:
       with:
         name: stats_${{matrix.jit-engine}}_${{matrix.run-no}}.json
         path: ${{runner.workspace}}/install/examples/bare_etiss_processor/stats_${{matrix.jit-engine}}_${{matrix.run-no}}.json
+
+  compare:
+    needs: benchmark
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: get old benchmark results
+      uses: actions/checkout@v2
+      with:
+        ref: benchmark_results
+        path: ${{runner.workspace}}/output
+
+    - name: Fetch results
+      uses: actions/download-artifact@v2
+      with:
+        name: stats*.json
+        path: ${{runner.workspace}}/input
+
+    - name: Prepare compare script
+      run: |
+        sudo apt-get install python3-mako
+
+    - name: Run compare script
+      run: python3 script/etiss/ci_bench/compare_perf.py ${{runner.workspace}}/input/stats*.json ${{runner.workspace}}/output/results.json ${{ github.sha }}
+
+    - name: Deploy results to git
+      if: ${{github.event_name == 'push'}}
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ${{runner.workspace}}/output
+        publish_branch: benchmark_results
+        enable_jekyll: true
