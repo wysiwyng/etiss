@@ -147,12 +147,12 @@ jobs:
       run: |
         PATH=$PATH:/d/a/etiss/install/lib/
         cd $BUILD_TYPE
-        ./main.exe --vp.elf_file=../../../SW/riscv/build/riscv_example.elf --arch.cpu=RISCV --jit.type=TCCJIT --etiss.loglevel=4 -i../../../SW/riscv/memsegs.ini -pLogger
-        ./main.exe --vp.elf_file=../../../SW/riscv/build/riscv_example.elf --arch.cpu=RISCV --jit.type=LLVMJIT --etiss.loglevel=4 -i../../../SW/riscv/memsegs.ini -pLogger
-        ./main.exe --vp.elf_file=../../../SW/riscv_cpp/build/riscv_example.elf --arch.cpu=RISCV --jit.type=TCCJIT --etiss.loglevel=4 -i../../../SW/riscv_cpp/memsegs.ini -pLogger
-        ./main.exe --vp.elf_file=../../../SW/riscv_cpp/build/riscv_example.elf --arch.cpu=RISCV --jit.type=LLVMJIT --etiss.loglevel=4 -i../../../SW/riscv_cpp/memsegs.ini -pLogger
-        ./main.exe --vp.elf_file=../../../SW/riscv/build64/riscv_example.elf --arch.cpu=RISCV --jit.type=TCCJIT --etiss.loglevel=4 -i../../../SW/riscv/memsegs.ini -pLogger
-        ./main.exe --vp.elf_file=../../../SW/riscv_cpp/build64/riscv_example.elf --arch.cpu=RISCV --jit.type=TCCJIT --etiss.loglevel=4 -i../../../SW/riscv_cpp/memsegs.ini -pLogger
+        ./main.exe --vp.elf_file=../../../SW/riscv/build/riscv_example.elf --jit.type=TCCJIT --etiss.loglevel=4 -i../../../SW/riscv/memsegs.ini -pLogger
+        ./main.exe --vp.elf_file=../../../SW/riscv/build/riscv_example.elf --jit.type=LLVMJIT --etiss.loglevel=4 -i../../../SW/riscv/memsegs.ini -pLogger
+        ./main.exe --vp.elf_file=../../../SW/riscv_cpp/build/riscv_example.elf --jit.type=TCCJIT --etiss.loglevel=4 -i../../../SW/riscv_cpp/memsegs.ini -pLogger
+        ./main.exe --vp.elf_file=../../../SW/riscv_cpp/build/riscv_example.elf --jit.type=LLVMJIT --etiss.loglevel=4 -i../../../SW/riscv_cpp/memsegs.ini -pLogger
+        ./main.exe --vp.elf_file=../../../SW/riscv/build64/riscv_example.elf --jit.type=TCCJIT --etiss.loglevel=4 -i../../../SW/riscv/memsegs.ini -pLogger
+        ./main.exe --vp.elf_file=../../../SW/riscv_cpp/build64/riscv_example.elf --jit.type=TCCJIT --etiss.loglevel=4 -i../../../SW/riscv_cpp/memsegs.ini -pLogger
 
   benchmark:
     strategy:
@@ -183,5 +183,3 @@ jobs:
       with:
         name: stats_${{matrix.jit-engine}}_${{matrix.run-no}}.json
         path: ${{runner.workspace}}/install/examples/bare_etiss_processor/stats_${{matrix.jit-engine}}_${{matrix.run-no}}.json
-
-
