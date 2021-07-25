@@ -11,8 +11,8 @@ jobs:
       matrix:
         config:
           - {name: "Linux", os: ubuntu-latest, cmakegen: "", llvm: "linux-gnu-ubuntu-20.04", llvm-ext: ".tar.xz", tc: "linux-ubuntu14", tc-ext: ".tar.gz", unpack: "tar xf"}
-          #- {name: "Windows", os: windows-latest, cmakegen: "-G \"Unix Makefiles\" -DCMAKE_MAKE_PROGRAM=make", llvm: "", llvm-ext: "", tc: "w64-mingw32", tc-ext: ".zip", unpack: "unzip"}
-          #- {name: "Mac", os: macOS-latest, cmakegen: "", llvm: "apple-darwin", llvm-ext: ".tar.xz", tc: "apple-darwin", tc-ext: ".tar.gz", unpack: "tar xf"}
+          - {name: "Windows", os: windows-latest, cmakegen: "-G \"Unix Makefiles\" -DCMAKE_MAKE_PROGRAM=make", llvm: "", llvm-ext: "", tc: "w64-mingw32", tc-ext: ".zip", unpack: "unzip"}
+          - {name: "Mac", os: macOS-latest, cmakegen: "", llvm: "apple-darwin", llvm-ext: ".tar.xz", tc: "apple-darwin", tc-ext: ".tar.gz", unpack: "tar xf"}
 
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.name }}
@@ -117,9 +117,11 @@ jobs:
         cmake --build . --config $BUILD_TYPE
 
     - name: Compress Compiled System
+      if: matrix.config.name == 'Linux'
       run: tar -C ${{runner.workspace}} -cvf ${{runner.workspace}}/etiss.tar install
 
     - name: Upload Compiled System
+      if: matrix.config.name == 'Linux'
       uses: actions/upload-artifact@v2
       with:
         name: etiss-${{matrix.config.name}}.tar
@@ -178,6 +180,7 @@ jobs:
       working-directory: ${{runner.workspace}}/install/examples/bare_etiss_processor
       run: |
         ./run_helper.sh ../SW/riscv_dhry/build/riscv_example ${{matrix.jit-engine}} --vp.stats_file_path=stats_${{matrix.jit-engine}}_${{matrix.run-no}}.json
+
     - name: Save Benchmark Results
       uses: actions/upload-artifact@v2
       with:
