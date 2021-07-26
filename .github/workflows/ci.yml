@@ -196,28 +196,33 @@ jobs:
       uses: actions/checkout@v2
       with:
         ref: benchmark_results
-        path: ${{runner.workspace}}/output
+        path: output
 
     - name: ls
-      run: ls -al ${{runner.workspace}}
+      run: ls -al
 
     - name: Fetch results
       uses: actions/download-artifact@v2
       with:
-        path: ${{runner.workspace}}/input
+        path: input
+
+    - name: ls
+      run: ls -al
 
     - name: Prepare compare script
       run: |
         sudo apt-get install python3-mako
 
     - name: Unpack Compiled System
-      working-directory: ${{runner.workspace}}
       run: |
         mv input/etiss.tar .
         tar -xf etiss.tar
 
+    - name: ls
+      run: ls -al
+
     - name: Run compare script
-      run: python3 ${{runner.workspace}}/script/etiss/ci_bench/compare_perf.py input/stats*.json output/results.json ${{ github.sha }}
+      run: python3 script/etiss/ci_bench/compare_perf.py input/stats*.json output/results.json ${{ github.sha }}
 
     - name: Deploy results to git
       if: ${{github.event_name == 'push'}}
