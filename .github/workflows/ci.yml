@@ -203,19 +203,16 @@ jobs:
         ref: benchmark_results
         path: output
 
-    - name: ls
-      run: ls -al
+    - name: Checkout wiki code
+      uses: actions/checkout@v2
+      with:
+        repository: ${{github.repository}}.wiki
+        path: wiki
 
     - name: Fetch results
       uses: actions/download-artifact@v2
       with:
         path: artifacts
-
-    - name: ls
-      run: |
-        ls -al
-        ls -al output
-        ls -al artifacts
 
     - name: Prepare compare script
       run: |
@@ -228,16 +225,19 @@ jobs:
         find artifacts -type f -name '*.tar' -exec mv {} . \;
         ls -al
         ls -al input
-        tar -xf etiss.tar
+
+    - name: Unpack etiss
+      run: tar -xf etiss.tar
 
     - name: ls
       run: |
         ls -al
         ls -al output
         ls -al input
+        ls -al wiki
 
     - name: Run compare script
-      run: python3 script/etiss/ci_bench/compare_perf.py input/stats*.json output/results.json wiki_text.md ${{ github.sha }}
+      run: python3 script/etiss/ci_bench/compare_perf.py input/stats*.json output/results.json wiki/performance.md ${{ github.sha }}
 
     - name: Deploy results to git
       if: ${{github.event_name == 'push'}}
@@ -247,3 +247,13 @@ jobs:
         publish_dir: output
         publish_branch: benchmark_results
         enable_jekyll: true
+
+    - name: Update Wiki
+      if: ${{github.event_name == 'push'}}
+      run: |
+        cd wiki
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git commit -m "Update Performance stats"
+        git push
