@@ -164,7 +164,7 @@ jobs:
   benchmark:
     strategy:
       matrix:
-        run-no: [1, 2, 3] #, 4, 5]
+        run-no: [1, 2, 3, 4, 5]
         jit-engine: ["tcc", "gcc", "llvm"]
 
     needs: build
