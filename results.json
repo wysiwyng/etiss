@@ -8,10 +8,14 @@
             [
                 34.397971123333335,
                 "08e0b5b91d3f98c41efff69cc614ea4b006395d8"
+            ],
+            [
+                37.04126953,
+                "61e245848a6f7c45c2bbf92f00ccfe77d1fa94c2"
             ]
         ],
-        "best_mips": 35.24499599666667,
-        "best_hash": "f540f4f4d42e7601e10b9591dad05fe6ea637ecd",
+        "best_mips": 37.04126953,
+        "best_hash": "61e245848a6f7c45c2bbf92f00ccfe77d1fa94c2",
         "regressed_hash": null
     },
     "llvm": {
@@ -23,11 +27,15 @@
             [
                 37.59647322666667,
                 "08e0b5b91d3f98c41efff69cc614ea4b006395d8"
+            ],
+            [
+                31.49303213,
+                "61e245848a6f7c45c2bbf92f00ccfe77d1fa94c2"
             ]
         ],
         "best_mips": 37.59647322666667,
         "best_hash": "08e0b5b91d3f98c41efff69cc614ea4b006395d8",
-        "regressed_hash": null
+        "regressed_hash": "61e245848a6f7c45c2bbf92f00ccfe77d1fa94c2"
     },
     "tcc": {
         "mips": [
@@ -38,6 +46,10 @@
             [
                 29.191520396666668,
                 "08e0b5b91d3f98c41efff69cc614ea4b006395d8"
+            ],
+            [
+                27.099635646666666,
+                "61e245848a6f7c45c2bbf92f00ccfe77d1fa94c2"
             ]
         ],
         "best_mips": 29.191520396666668,
