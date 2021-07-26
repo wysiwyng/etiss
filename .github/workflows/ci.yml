@@ -215,8 +215,8 @@ jobs:
 
     - name: Unpack Compiled System
       run: |
-        mv input/etiss.tar .
-        tar -xf etiss.tar
+        mv input/etiss-Linux.tar .
+        tar -xf etiss-Linux.tar
 
     - name: ls
       run: ls -al
