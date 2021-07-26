@@ -31,6 +31,6 @@ for eng in ENGINES:
             files.append(fpath)
             json.dump(values, fp)
 
-current_hash = ''.join(random.choices(string.hexdigits.lower(), k=8))
+current_hash = ''.join(random.choices(string.hexdigits.lower(), k=32))
 
-main(files, "new_stats.json", current_hash)
+main(files, "new_stats.json", "wiki.md", current_hash, "https://github.com/wysiwyng/etiss")
