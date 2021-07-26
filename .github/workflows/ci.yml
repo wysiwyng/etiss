@@ -226,7 +226,9 @@ jobs:
         mkdir input
         find artifacts -type f -name '*.json' -exec mv {} input \;
         find artifacts -type f -name '*.tar' -exec mv {} . \;
-        tar -xf etiss-Linux.tar
+        ls -al
+        ls -al input
+        tar -xf etiss.tar
 
     - name: ls
       run: |
