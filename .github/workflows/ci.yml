@@ -118,7 +118,7 @@ jobs:
 
     - name: Compress Compiled System
       if: matrix.config.name == 'Linux'
-      run: tar -C ${{runner.workspace}} -cvf ${{runner.workspace}}/etiss.tar install
+      run: tar -C ${{runner.workspace}} -cvf ${{runner.workspace}}/etiss.tar install script
 
     - name: Upload Compiled System
       if: matrix.config.name == 'Linux'
@@ -204,21 +204,23 @@ jobs:
     - name: Fetch results
       uses: actions/download-artifact@v2
       with:
-        path: input
+        path: artifacts
 
     - name: ls
       run: |
         ls -al
         ls -al output
-        ls -al input
+        ls -al artifacts
 
     - name: Prepare compare script
       run: |
         sudo apt-get install python3-mako
 
-    - name: Unpack Compiled System
+    - name: Prepare files
       run: |
-        mv input/etiss-Linux.tar .
+        mkdir input
+        find artifacts -type f -name '*.json' -exec mv {} input \;
+        find artifacts -type f -name '*.tar' -exec mv {} . \;
         tar -xf etiss-Linux.tar
 
     - name: ls
