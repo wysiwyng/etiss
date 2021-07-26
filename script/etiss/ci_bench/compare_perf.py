@@ -20,7 +20,7 @@ ${engine} | ${messages[engine]} | ${stats["mips"][-1][0]} | ${stats["best_mips"]
 % endfor
 '''
 
-def main(input_files, stats_file, current_hash):
+def main(input_files, stats_file, wiki_md, current_hash):
     def init_engine(init_value):
         return {
                 f"{KEY}": [],
@@ -99,7 +99,8 @@ def main(input_files, stats_file, current_hash):
 
     t = Template(WIKI_TEMPLATE)
     s = t.render(messages=messages, statss=stats, current_hash=current_hash)
-    print(s)
+    with open(wiki_md, "w") as ofile:
+        ofile.write(s)
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser()
@@ -108,8 +109,9 @@ if __name__ == "__main__":
 
     p.add_argument("input_files", nargs="+")
     p.add_argument("stats_file")
+    p.add_argument("wiki_md")
     p.add_argument("current_hash")
 
     p_args = p.parse_args()
 
-    main(p_args.input_files, p_args.stats_file, p_args.current_hash)
+    main(p_args.input_files, p_args.stats_file, p_args.wiki_md, p_args.current_hash)
