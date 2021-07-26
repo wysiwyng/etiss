@@ -192,8 +192,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-
     - name: get old benchmark results
       uses: actions/checkout@v2
       with:
@@ -203,15 +201,19 @@ jobs:
     - name: Fetch results
       uses: actions/download-artifact@v2
       with:
-        name: stats*.json
         path: input
 
     - name: Prepare compare script
       run: |
         sudo apt-get install python3-mako
 
+    - name: unpack etiss
+      run: |
+        mv output/etiss.tar ${{runner.workspace}}
+        tar xf ${{runner.workspace}}/etiss.tar
+
     - name: Run compare script
-      run: python3 script/etiss/ci_bench/compare_perf.py input/stats*.json output/results.json ${{ github.sha }}
+      run: python3 ${{runner.workspace}}/script/etiss/ci_bench/compare_perf.py input/stats*.json output/results.json ${{ github.sha }}
 
     - name: Deploy results to git
       if: ${{github.event_name == 'push'}}
