@@ -1,0 +1,35 @@
+{
+    "gcc": {
+        "mips": [
+            [
+                35.24499599666667,
+                "f540f4f4d42e7601e10b9591dad05fe6ea637ecd"
+            ]
+        ],
+        "best_mips": 35.24499599666667,
+        "best_hash": "f540f4f4d42e7601e10b9591dad05fe6ea637ecd",
+        "regressed_hash": null
+    },
+    "llvm": {
+        "mips": [
+            [
+                35.58672442666666,
+                "f540f4f4d42e7601e10b9591dad05fe6ea637ecd"
+            ]
+        ],
+        "best_mips": 35.58672442666666,
+        "best_hash": "f540f4f4d42e7601e10b9591dad05fe6ea637ecd",
+        "regressed_hash": null
+    },
+    "tcc": {
+        "mips": [
+            [
+                26.449370013333333,
+                "f540f4f4d42e7601e10b9591dad05fe6ea637ecd"
+            ]
+        ],
+        "best_mips": 26.449370013333333,
+        "best_hash": "f540f4f4d42e7601e10b9591dad05fe6ea637ecd",
+        "regressed_hash": null
+    }
+}
