@@ -12,10 +12,14 @@
             [
                 37.04126953,
                 "61e245848a6f7c45c2bbf92f00ccfe77d1fa94c2"
+            ],
+            [
+                37.225824376,
+                "e2d63cf25a0b831fe039ef007f8d8e7e519db42e"
             ]
         ],
-        "best_mips": 37.04126953,
-        "best_hash": "61e245848a6f7c45c2bbf92f00ccfe77d1fa94c2",
+        "best_mips": 37.225824376,
+        "best_hash": "e2d63cf25a0b831fe039ef007f8d8e7e519db42e",
         "regressed_hash": null
     },
     "llvm": {
@@ -31,6 +35,10 @@
             [
                 31.49303213,
                 "61e245848a6f7c45c2bbf92f00ccfe77d1fa94c2"
+            ],
+            [
+                32.66216055,
+                "e2d63cf25a0b831fe039ef007f8d8e7e519db42e"
             ]
         ],
         "best_mips": 37.59647322666667,
@@ -50,6 +58,10 @@
             [
                 27.099635646666666,
                 "61e245848a6f7c45c2bbf92f00ccfe77d1fa94c2"
+            ],
+            [
+                26.655804832,
+                "e2d63cf25a0b831fe039ef007f8d8e7e519db42e"
             ]
         ],
         "best_mips": 29.191520396666668,
