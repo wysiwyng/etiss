@@ -34,6 +34,7 @@ def main(input_files, stats_file, wiki_md, current_hash):
     for in_file in input_files:
         in_path = pathlib.Path(in_file)
         in_name = in_path.stem
+        print(f"read {in_path}")
 
         split_name = in_name.split("_")
 
@@ -52,8 +53,9 @@ def main(input_files, stats_file, wiki_md, current_hash):
 
         runs[engine].append(in_dict[KEY])
 
+    print(runs)
     runs_avg = {key: statistics.mean(value) for key, value in runs.items()}
-
+    print(runs_avg)
     messages = {}
     stats = {}
 
@@ -64,7 +66,7 @@ def main(input_files, stats_file, wiki_md, current_hash):
     else:
         with open(stats_file, "r") as fp:
             stats = json.load(fp)
-
+    print(stats)
     for engine, value in runs_avg.items():
         if engine not in stats:
             stats[engine] = init_engine(value)
