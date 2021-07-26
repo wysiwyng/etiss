@@ -16,7 +16,7 @@ WIKI_TEMPLATE = '''# Performance statistics for commit ${current_hash[:8]}
 JIT Engine | Status | Current MIPS | Best MIPS | at commit | diff to best
 ---|---|---|---|---|---
 % for engine, stats in statss.items():
-${engine} | ${messages[engine].short_md_link(repo_url+"/commit/__HASHHERE__")} | ${f'{stats["mips"][-1][0]:.4f}'} | ${f'{stats["best_mips"]:.4f}'} | ${stats["best_hash"][:8]} | ${f'diffs[engine]:.4f'}
+${engine} | ${messages[engine].short_md_link("https://github.com/"+repo_url+"/commit/__HASHHERE__")} | ${f'{stats["mips"][-1][0]:.4f}'} | ${f'{stats["best_mips"]:.4f}'} | ${stats["best_hash"][:8]} | ${f'{diffs[engine]:.4f}'}
 % endfor
 '''
 
