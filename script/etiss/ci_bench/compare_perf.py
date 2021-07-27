@@ -123,7 +123,7 @@ def main(input_files, stats_file, wiki_md, current_hash, repo_url, indent=None):
 
     print(messages)
 
-    make_wiki_link = partial(make_md_link, repo_url)
+    make_wiki_link = partial(make_md_link, "https://github.com/"+repo_url)
     t = Template(WIKI_TEMPLATE)
     s = t.render(messages=messages, statss=stats, current_hash=current_hash, diffs=diffs, repo_url=repo_url, make_wiki_link=make_wiki_link)
     with open(wiki_md, "w") as ofile:
