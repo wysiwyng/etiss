@@ -223,18 +223,9 @@ jobs:
         mkdir input
         find artifacts -type f -name '*.json' -exec mv {} input \;
         find artifacts -type f -name '*.tar' -exec mv {} . \;
-        ls -al
-        ls -al input
 
     - name: Unpack etiss
       run: tar -xf etiss.tar
-
-    - name: ls
-      run: |
-        ls -al
-        ls -al output
-        ls -al input
-        ls -al wiki
 
     - name: Run compare script
       run: python3 script/etiss/ci_bench/compare_perf.py input/stats*.json output/results.json wiki/performance.md ${{ github.sha }} $GITHUB_REPOSITORY

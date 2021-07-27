@@ -3,6 +3,7 @@ import json
 import pathlib
 import statistics
 from collections import defaultdict
+from functools import partial
 
 from mako.template import Template
 
@@ -12,13 +13,16 @@ MAX_HISTORY = 50
 REPO_URL = "https://github.com/wysiwyng/etiss/tree"
 
 
-WIKI_TEMPLATE = '''# Performance statistics for commit ${current_hash[:8]}
+WIKI_TEMPLATE = '''# Performance statistics for commit ${make_wiki_link(current_hash)}
 JIT Engine | Status | Current MIPS | Best MIPS | at commit | diff to best
 ---|---|---|---|---|---
 % for engine, stats in statss.items():
-${engine} | ${messages[engine].short_md_link("https://github.com/"+repo_url+"/commit/__HASHHERE__")} | ${f'{stats["mips"][-1][0]:.4f}'} | ${f'{stats["best_mips"]:.4f}'} | ${stats["best_hash"][:8]} | ${f'{diffs[engine]:.2%}'}
+${engine} | ${messages[engine].short_md_link("https://github.com/"+repo_url+"/commit/__HASHHERE__")} | ${f'{stats["mips"][-1][0]:.4f}'} | ${f'{stats["best_mips"]:.4f}'} | ${make_wiki_link(stats["best_hash"])} | ${f'{diffs[engine]:.2%}'}
 % endfor
 '''
+
+def make_md_link(base_url, commit, l=8):
+    return f"({commit[:l]})[{base_url}/commit/{commit}]"
 
 class MessageWithHash:
     HASH_PLACEHOLDER = "__HASHHERE__"
@@ -119,8 +123,9 @@ def main(input_files, stats_file, wiki_md, current_hash, repo_url, indent=None):
 
     print(messages)
 
+    make_wiki_link = partial(make_md_link, repo_url)
     t = Template(WIKI_TEMPLATE)
-    s = t.render(messages=messages, statss=stats, current_hash=current_hash, diffs=diffs, repo_url=repo_url)
+    s = t.render(messages=messages, statss=stats, current_hash=current_hash, diffs=diffs, repo_url=repo_url, make_wiki_link=make_wiki_link)
     with open(wiki_md, "w") as ofile:
         ofile.write(s)
 
