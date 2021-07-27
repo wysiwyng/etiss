@@ -22,7 +22,7 @@ ${engine} | ${messages[engine].short_md_link("https://github.com/"+repo_url+"/co
 '''
 
 def make_md_link(base_url, commit, l=8):
-    return f"({commit[:l]})[{base_url}/commit/{commit}]"
+    return f"[{commit[:l]}]({base_url}/commit/{commit})"
 
 class MessageWithHash:
     HASH_PLACEHOLDER = "__HASHHERE__"
