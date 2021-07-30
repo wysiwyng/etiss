@@ -16,8 +16,8 @@ REPO_URL = "https://github.com/wysiwyng/etiss/tree"
 WIKI_TEMPLATE = '''# Performance statistics for commit ${make_wiki_link(current_hash)}
 JIT Engine | Status | Current MIPS | Best MIPS | at commit | diff to best
 ---|---|---|---|---|---
-% for engine, stats in statss.items():
-${engine} | ${messages[engine].short_md_link("https://github.com/"+repo_url+"/commit/__HASHHERE__")} | ${f'{stats["mips"][-1][0]:.4f}'} | ${f'{stats["best_mips"]:.4f}'} | ${make_wiki_link(stats["best_hash"])} | ${f'{diffs[engine]:.2%}'}
+% for engine_name, engine_stats in stats.items():
+${engine_name} | ${messages[engine_name].short_md_link()} | ${f'{engine_stats["mips"][-1][0]:.4f}'} | ${f'{engine_stats["best_mips"]:.4f}'} | ${make_wiki_link(engine_stats["best_hash"])} | ${f'{diffs[engine_name]:.2%}'}
 % endfor
 '''
 
@@ -27,16 +27,17 @@ def make_md_link(base_url, commit, l=8):
 class MessageWithHash:
     HASH_PLACEHOLDER = "__HASHHERE__"
 
-    def __init__(self, message: str, hash: str):
+    def __init__(self, message: str, hash: str=""):
         self.message = message
         self.hash = hash
+        #self.repo_url = repo_url
 
     def short(self, l=8):
-        short_hash = self.hash[:8]
+        short_hash = self.hash[:l]
         return self.message.replace(self.HASH_PLACEHOLDER, short_hash)
 
-    def short_md_link(self, link_url: str, l=8):
-        link_text = f"[{self.hash[:l]}]({link_url.replace(self.HASH_PLACEHOLDER, self.hash)})"
+    def short_md_link(self, l=8):
+        link_text = f"[{self.hash[:l]}]({self.repo_url.replace(self.HASH_PLACEHOLDER, self.hash)})"
         return self.message.replace(self.HASH_PLACEHOLDER, link_text)
 
 
@@ -89,6 +90,7 @@ def main(input_files, stats_file, wiki_md, current_hash, repo_url, indent=None):
             stats = json.load(fp)
 
     print(stats)
+    MessageWithHash.repo_url = "https://github.com/" + repo_url + "/commit/" + MessageWithHash.HASH_PLACEHOLDER
 
     for engine, value in runs_avg.items():
         if engine not in stats:
@@ -104,18 +106,18 @@ def main(input_files, stats_file, wiki_md, current_hash, repo_url, indent=None):
             if value > best:
                 stats[engine][f"best_{KEY}"] = value
                 stats[engine][f"best_hash"] = current_hash
-                messages[engine] = MessageWithHash("new best", "")
+                messages[engine] = MessageWithHash("new best")
             elif diff < -TOLERANCE:
                 if stats[engine]["regressed_hash"] is None:
-                    messages[engine] = MessageWithHash("regression introduced", "")
+                    messages[engine] = MessageWithHash("regression introduced")
                     stats[engine]["regressed_hash"] = current_hash
                 else:
-                    messages[engine] = MessageWithHash("regressed since commit "+MessageWithHash.HASH_PLACEHOLDER, stats[engine]['regressed_hash'])
+                    messages[engine] = MessageWithHash("regressed since commit " + MessageWithHash.HASH_PLACEHOLDER, stats[engine]['regressed_hash'])
             else:
                 if stats[engine]["regressed_hash"] is not None:
-                    messages[engine] = MessageWithHash("regression cleared", "")
+                    messages[engine] = MessageWithHash("regression cleared")
                 else:
-                    messages[engine] = MessageWithHash("no change", "")
+                    messages[engine] = MessageWithHash("no change")
                 stats[engine]["regressed_hash"] = None
 
     with open(stats_file, "w") as fp:
@@ -123,9 +125,9 @@ def main(input_files, stats_file, wiki_md, current_hash, repo_url, indent=None):
 
     print(messages)
 
-    make_wiki_link = partial(make_md_link, "https://github.com/"+repo_url)
+    make_wiki_link = partial(make_md_link, "https://github.com/"+repo_url+"/commit/__HASHHERE__")
     t = Template(WIKI_TEMPLATE)
-    s = t.render(messages=messages, statss=stats, current_hash=current_hash, diffs=diffs, repo_url=repo_url, make_wiki_link=make_wiki_link)
+    s = t.render(messages=messages, stats=stats, current_hash=current_hash, diffs=diffs, repo_url=repo_url, make_wiki_link=make_wiki_link)
     with open(wiki_md, "w") as ofile:
         ofile.write(s)
 
