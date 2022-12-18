@@ -1,5 +1,5 @@
 /**
- * Generated on Mon, 05 Dec 2022 22:18:34 +0100.
+ * Generated on Fri, 16 Dec 2022 20:48:36 +0100.
  *
  * This file contains the instruction behavior models of the RV64M
  * instruction set for the RV64IMACFD core architecture.
@@ -47,7 +47,7 @@ rs2 += R_rs2_0.read(ba) << 0;
 // -----------------------------------------------------------------------------
 partInit.code() += "cpu->nextPc = " + std::to_string(ic.current_address_ + 4UL) + "U;\n";
 if ((rd % 32U) != 0U) {
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = (etiss_uint64)((etiss_int32)(((etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs1 % 32U) + "U]) * (etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U]))));\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = (etiss_uint64)((etiss_int32)(((etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs1 % 32U) + "U]) * (etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U]))));\n";
 }
 partInit.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
 partInit.code() += "cpu->instructionPointer = cpu->nextPc;\n";
@@ -55,7 +55,7 @@ partInit.code() += "cpu->instructionPointer = cpu->nextPc;\n";
 
 		partInit.getRegisterDependencies().add(reg_name[rs1 % 32U], 64);
 		partInit.getRegisterDependencies().add(reg_name[rs2 % 32U], 64);
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;
@@ -120,14 +120,14 @@ if ((rd % 32U) != 0U) {
 partInit.code() += "if (*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U] != 0UL) {\n";
 etiss_int32 MMIN = 2147483648U;
 partInit.code() += "if ((etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs1 % 32U) + "U]) == " + std::to_string(MMIN) + " && (etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U]) == -1) {\n";
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = -2147483648L;\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = -2147483648L;\n";
 partInit.code() += "}\n";
 partInit.code() += "else {\n";
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = (etiss_int64)(((etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs1 % 32U) + "U]) / (etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U])));\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = (etiss_int64)(((etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs1 % 32U) + "U]) / (etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U])));\n";
 partInit.code() += "}\n";
 partInit.code() += "}\n";
 partInit.code() += "else {\n";
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = -1L;\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = -1L;\n";
 partInit.code() += "}\n";
 }
 partInit.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
@@ -136,7 +136,7 @@ partInit.code() += "cpu->instructionPointer = cpu->nextPc;\n";
 
 		partInit.getRegisterDependencies().add(reg_name[rs1 % 32U], 64);
 		partInit.getRegisterDependencies().add(reg_name[rs2 % 32U], 64);
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;
@@ -199,10 +199,10 @@ rs2 += R_rs2_0.read(ba) << 0;
 partInit.code() += "cpu->nextPc = " + std::to_string(ic.current_address_ + 4UL) + "U;\n";
 if ((rd % 32U) != 0U) {
 partInit.code() += "if ((etiss_uint32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U]) != 0U) {\n";
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = (etiss_uint64)((etiss_int32)(((etiss_uint32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs1 % 32U) + "U]) / (etiss_uint32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U]))));\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = (etiss_uint64)((etiss_int32)(((etiss_uint32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs1 % 32U) + "U]) / (etiss_uint32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U]))));\n";
 partInit.code() += "}\n";
 partInit.code() += "else {\n";
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = -1L;\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = -1L;\n";
 partInit.code() += "}\n";
 }
 partInit.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
@@ -211,7 +211,7 @@ partInit.code() += "cpu->instructionPointer = cpu->nextPc;\n";
 
 		partInit.getRegisterDependencies().add(reg_name[rs1 % 32U], 64);
 		partInit.getRegisterDependencies().add(reg_name[rs2 % 32U], 64);
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;
@@ -276,14 +276,14 @@ if ((rd % 32U) != 0U) {
 partInit.code() += "if (*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U] != 0UL) {\n";
 etiss_int32 MMIN = 2147483648U;
 partInit.code() += "if ((etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs1 % 32U) + "U]) == " + std::to_string(MMIN) + " && (etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U]) == -1) {\n";
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = 0UL;\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = 0UL;\n";
 partInit.code() += "}\n";
 partInit.code() += "else {\n";
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = (etiss_int64)(((etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs1 % 32U) + "U]) % (etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U])));\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = (etiss_int64)(((etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs1 % 32U) + "U]) % (etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U])));\n";
 partInit.code() += "}\n";
 partInit.code() += "}\n";
 partInit.code() += "else {\n";
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = (etiss_int64)(((etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs1 % 32U) + "U])));\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = (etiss_int64)(((etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs1 % 32U) + "U])));\n";
 partInit.code() += "}\n";
 }
 partInit.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
@@ -292,7 +292,7 @@ partInit.code() += "cpu->instructionPointer = cpu->nextPc;\n";
 
 		partInit.getRegisterDependencies().add(reg_name[rs1 % 32U], 64);
 		partInit.getRegisterDependencies().add(reg_name[rs2 % 32U], 64);
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;
@@ -355,10 +355,10 @@ rs2 += R_rs2_0.read(ba) << 0;
 partInit.code() += "cpu->nextPc = " + std::to_string(ic.current_address_ + 4UL) + "U;\n";
 if ((rd % 32U) != 0U) {
 partInit.code() += "if ((etiss_uint32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U]) != 0U) {\n";
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = (etiss_uint64)((etiss_int32)(((etiss_uint32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs1 % 32U) + "U]) % (etiss_uint32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U]))));\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = (etiss_uint64)((etiss_int32)(((etiss_uint32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs1 % 32U) + "U]) % (etiss_uint32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U]))));\n";
 partInit.code() += "}\n";
 partInit.code() += "else {\n";
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = (etiss_uint64)(((etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs1 % 32U) + "U])));\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = (etiss_uint64)(((etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs1 % 32U) + "U])));\n";
 partInit.code() += "}\n";
 }
 partInit.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
@@ -367,7 +367,7 @@ partInit.code() += "cpu->instructionPointer = cpu->nextPc;\n";
 
 		partInit.getRegisterDependencies().add(reg_name[rs1 % 32U], 64);
 		partInit.getRegisterDependencies().add(reg_name[rs2 % 32U], 64);
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;

@@ -1,5 +1,5 @@
 /**
- * Generated on Mon, 05 Dec 2022 22:55:33 +0100.
+ * Generated on Fri, 16 Dec 2022 20:48:36 +0100.
  *
  * This file contains the function macros for the RV64IMACFD core architecture.
  */
@@ -22,6 +22,13 @@ static inline void leave(etiss_int32 priv_lvl);
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
 static inline void wait(etiss_int32 flag);
+#endif
+
+#ifndef ETISS_ARCH_STATIC_FN_ONLY
+static inline etiss_uint8 extension_enabled(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers, etiss_int8 extension)
+{
+return (*((RV64IMACFD*)cpu)->CSR[769] >> (extension - 65U)) & 1U;
+}
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
@@ -145,6 +152,18 @@ static inline void raise(ETISS_CPU * const cpu, ETISS_System * const system, voi
 {
 cpu->return_pending = 1;
 etiss_uint64 epc = cpu->instructionPointer;
+if (((RV64IMACFD*)cpu)->PRIV <= 1 && (*((RV64IMACFD*)cpu)->CSR[770] >> mcause) & 1U) {
+cpu->nextPc = (*((RV64IMACFD*)cpu)->CSR[261] & -2L);
+*((RV64IMACFD*)cpu)->CSR[321] = epc;
+*((RV64IMACFD*)cpu)->CSR[322] = mcause;
+etiss_uint64 s = *((RV64IMACFD*)cpu)->CSR[256];
+s = set_field(s, 32, get_field(s, 2));
+s = set_field(s, 256, ((RV64IMACFD*)cpu)->PRIV);
+s = set_field(s, 2, 0U);
+*((RV64IMACFD*)cpu)->CSR[256] = s;
+((RV64IMACFD*)cpu)->PRIV = (1) & 0x7;
+}
+else {
 cpu->nextPc = (*((RV64IMACFD*)cpu)->CSR[773] & -2L);
 *((RV64IMACFD*)cpu)->CSR[833] = epc;
 *((RV64IMACFD*)cpu)->CSR[834] = mcause;
@@ -154,6 +173,7 @@ s = set_field(s, 6144, ((RV64IMACFD*)cpu)->PRIV);
 s = set_field(s, 8, 0U);
 *((RV64IMACFD*)cpu)->CSR[768] = s;
 ((RV64IMACFD*)cpu)->PRIV = (3) & 0x7;
+}
 }
 #endif
 
@@ -199,6 +219,37 @@ static inline etiss_uint64 etiss_get_instret(ETISS_CPU * const cpu, ETISS_System
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
+static inline etiss_uint64 sstatus_mask(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers)
+{
+etiss_uint64 mask = 0U;
+if (extension_enabled(cpu, system, plugin_pointers, 83U)) {
+mask = mask | 5767458UL;
+if (extension_enabled(cpu, system, plugin_pointers, 86U)) {
+mask = mask | 1536L;
+}
+if (extension_enabled(cpu, system, plugin_pointers, 70U)) {
+mask = mask | 24576L;
+}
+if (extension_enabled(cpu, system, plugin_pointers, 88U)) {
+mask = mask | 98304L;
+}
+if (0U && get_field(*((RV64IMACFD*)cpu)->CSR[384], 2147483648U) || 1U && get_field(*((RV64IMACFD*)cpu)->CSR[384], 17293822569102704640UL)) {
+mask = mask | 262144L;
+}
+}
+return mask;
+}
+#endif
+
+#ifndef ETISS_ARCH_STATIC_FN_ONLY
+static inline etiss_uint64 mstatus_mask(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers)
+{
+etiss_uint64 mask = 6280U;
+return mask | sstatus_mask(cpu, system, plugin_pointers);
+}
+#endif
+
+#ifndef ETISS_ARCH_STATIC_FN_ONLY
 static inline etiss_uint64 csr_read(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers, etiss_uint32 csr)
 {
 if (csr == 1) {
@@ -225,6 +276,12 @@ return etiss_get_instret(cpu, system, plugin_pointers);
 if (csr == 3202) {
 return etiss_get_instret(cpu, system, plugin_pointers) >> 32U;
 }
+if (csr == 768 || csr == 256) {
+return *((RV64IMACFD*)cpu)->CSR[768] | 8589934592UL | 34359738368UL;
+}
+if (csr == 769) {
+return (((2U) << 63) | ((((*((RV64IMACFD*)cpu)->CSR[769]) >> (0U)) & 9223372036854775807)));
+}
 return *((RV64IMACFD*)cpu)->CSR[csr];
 }
 #endif
@@ -242,7 +299,10 @@ if (csr == 1) {
 *((RV64IMACFD*)cpu)->CSR[3] = val & 255UL;
 }
  else if (csr == 768) {
-*((RV64IMACFD*)cpu)->CSR[768] = val & 136UL;
+*((RV64IMACFD*)cpu)->CSR[768] = val & mstatus_mask(cpu, system, plugin_pointers);
+}
+ else if (csr == 256) {
+*((RV64IMACFD*)cpu)->CSR[768] = val & sstatus_mask(cpu, system, plugin_pointers);
 }
  else if (csr != 769) {
 *((RV64IMACFD*)cpu)->CSR[csr] = val;

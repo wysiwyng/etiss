@@ -1,5 +1,5 @@
 /**
- * Generated on Mon, 05 Dec 2022 22:18:34 +0100.
+ * Generated on Fri, 16 Dec 2022 20:48:36 +0100.
  *
  * This file contains the instruction behavior models of the RV64IC
  * instruction set for the RV64IMACFD core architecture.
@@ -46,14 +46,14 @@ imm += R_imm_5.read(ba) << 5;
 // -----------------------------------------------------------------------------
 partInit.code() += "cpu->nextPc = " + std::to_string(ic.current_address_ + 2UL) + "U;\n";
 if ((rs1 % 32U) != 0U) {
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rs1 % 32) + "U] = (etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs1 % 32U) + "U]) + " + std::to_string(((etiss_int8)((imm) << (2)) >> (2))) + ";\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rs1 % 32U) + "U] = (etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs1 % 32U) + "U]) + " + std::to_string(((etiss_int8)((imm) << (2)) >> (2))) + ";\n";
 }
 partInit.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
 partInit.code() += "cpu->instructionPointer = cpu->nextPc;\n";
 // -----------------------------------------------------------------------------
 
 		partInit.getRegisterDependencies().add(reg_name[rs1 % 32U], 64);
-		partInit.getAffectedRegisters().add(reg_name[rs1 % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rs1 % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;
@@ -607,7 +607,7 @@ partInit.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";
 partInit.code() += "}\n";
 partInit.code() += "etiss_int64 res = mem_val_0;\n";
 if (rd % 32U) {
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = res;\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = res;\n";
 }
 else {
 partInit.code() += "cpu->exception = 0; raise(cpu, system, plugin_pointers, 0U, 2U);\n";
@@ -619,7 +619,7 @@ partInit.code() += "if (cpu->return_pending | cpu->exception) return cpu->except
 // -----------------------------------------------------------------------------
 
 		partInit.getRegisterDependencies().add(reg_name[2U], 64);
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;

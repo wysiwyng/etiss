@@ -1,5 +1,5 @@
 /**
- * Generated on Mon, 05 Dec 2022 22:18:34 +0100.
+ * Generated on Fri, 16 Dec 2022 20:48:36 +0100.
  *
  * This file contains the instruction behavior models of the RV32A
  * instruction set for the RV64IMACFD core architecture.
@@ -60,7 +60,7 @@ partInit.code() += "if (cpu->exception) {\n";
 partInit.code() += "translate_exc_code(cpu, system, plugin_pointers, cpu->exception);\n";
 partInit.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";\n";
 partInit.code() += "}\n";
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = (etiss_int64)(((etiss_int32)(mem_val_0)));\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = (etiss_int64)(((etiss_int32)(mem_val_0)));\n";
 }
 partInit.code() += "etiss_uint32 mem_val_1;\n";
 partInit.code() += "mem_val_1 = (etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U]);\n";
@@ -76,7 +76,7 @@ partInit.code() += "if (cpu->return_pending | cpu->exception) return cpu->except
 
 		partInit.getRegisterDependencies().add(reg_name[rs1 % 32U], 64);
 		partInit.getRegisterDependencies().add(reg_name[rs2 % 32U], 64);
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;
@@ -158,7 +158,7 @@ partInit.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";
 partInit.code() += "}\n";
 partInit.code() += "etiss_int32 res1 = mem_val_0;\n";
 if ((rd % 32U) != 0U) {
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = res1;\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = res1;\n";
 }
 partInit.code() += "etiss_uint32 res2 = res1 + *((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U];\n";
 partInit.code() += "etiss_uint32 mem_val_1;\n";
@@ -175,7 +175,7 @@ partInit.code() += "if (cpu->return_pending | cpu->exception) return cpu->except
 
 		partInit.getRegisterDependencies().add(reg_name[rs1 % 32U], 64);
 		partInit.getRegisterDependencies().add(reg_name[rs2 % 32U], 64);
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;
@@ -257,7 +257,7 @@ partInit.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";
 partInit.code() += "}\n";
 partInit.code() += "etiss_int32 res1 = mem_val_0;\n";
 if ((rd % 32U) != 0U) {
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = res1;\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = res1;\n";
 }
 partInit.code() += "etiss_uint32 res2 = res1 ^ *((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U];\n";
 partInit.code() += "etiss_uint32 mem_val_1;\n";
@@ -274,7 +274,7 @@ partInit.code() += "if (cpu->return_pending | cpu->exception) return cpu->except
 
 		partInit.getRegisterDependencies().add(reg_name[rs1 % 32U], 64);
 		partInit.getRegisterDependencies().add(reg_name[rs2 % 32U], 64);
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;
@@ -356,7 +356,7 @@ partInit.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";
 partInit.code() += "}\n";
 partInit.code() += "etiss_int32 res1 = mem_val_0;\n";
 if ((rd % 32U) != 0U) {
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = res1;\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = res1;\n";
 }
 partInit.code() += "etiss_uint32 res2 = res1 & *((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U];\n";
 partInit.code() += "etiss_uint32 mem_val_1;\n";
@@ -373,7 +373,7 @@ partInit.code() += "if (cpu->return_pending | cpu->exception) return cpu->except
 
 		partInit.getRegisterDependencies().add(reg_name[rs1 % 32U], 64);
 		partInit.getRegisterDependencies().add(reg_name[rs2 % 32U], 64);
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;
@@ -455,7 +455,7 @@ partInit.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";
 partInit.code() += "}\n";
 partInit.code() += "etiss_int32 res1 = mem_val_0;\n";
 if ((rd % 32U) != 0U) {
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = res1;\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = res1;\n";
 }
 partInit.code() += "etiss_uint32 res2 = res1 | *((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U];\n";
 partInit.code() += "etiss_uint32 mem_val_1;\n";
@@ -472,7 +472,7 @@ partInit.code() += "if (cpu->return_pending | cpu->exception) return cpu->except
 
 		partInit.getRegisterDependencies().add(reg_name[rs1 % 32U], 64);
 		partInit.getRegisterDependencies().add(reg_name[rs2 % 32U], 64);
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;
@@ -554,7 +554,7 @@ partInit.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";
 partInit.code() += "}\n";
 partInit.code() += "etiss_int32 res1 = mem_val_0;\n";
 if ((rd % 32U) != 0U) {
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = res1;\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = res1;\n";
 }
 partInit.code() += "etiss_uint32 res2 = (res1 > (etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U])) ? (*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U]) : (res1);\n";
 partInit.code() += "etiss_uint32 mem_val_1;\n";
@@ -571,7 +571,7 @@ partInit.code() += "if (cpu->return_pending | cpu->exception) return cpu->except
 
 		partInit.getRegisterDependencies().add(reg_name[rs1 % 32U], 64);
 		partInit.getRegisterDependencies().add(reg_name[rs2 % 32U], 64);
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;
@@ -653,7 +653,7 @@ partInit.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";
 partInit.code() += "}\n";
 partInit.code() += "etiss_int32 res1 = mem_val_0;\n";
 if ((rd % 32U) != 0U) {
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = res1;\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = res1;\n";
 }
 partInit.code() += "etiss_uint32 res2 = (res1 < (etiss_int32)(*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U])) ? (*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U]) : (res1);\n";
 partInit.code() += "etiss_uint32 mem_val_1;\n";
@@ -670,7 +670,7 @@ partInit.code() += "if (cpu->return_pending | cpu->exception) return cpu->except
 
 		partInit.getRegisterDependencies().add(reg_name[rs1 % 32U], 64);
 		partInit.getRegisterDependencies().add(reg_name[rs2 % 32U], 64);
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;
@@ -752,7 +752,7 @@ partInit.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";
 partInit.code() += "}\n";
 partInit.code() += "etiss_uint32 res1 = mem_val_0;\n";
 if ((rd % 32U) != 0U) {
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = (etiss_int32)(res1);\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = (etiss_int32)(res1);\n";
 }
 partInit.code() += "etiss_uint32 res2 = (res1 > *((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U]) ? (*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U]) : (res1);\n";
 partInit.code() += "etiss_uint32 mem_val_1;\n";
@@ -769,7 +769,7 @@ partInit.code() += "if (cpu->return_pending | cpu->exception) return cpu->except
 
 		partInit.getRegisterDependencies().add(reg_name[rs1 % 32U], 64);
 		partInit.getRegisterDependencies().add(reg_name[rs2 % 32U], 64);
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;
@@ -851,7 +851,7 @@ partInit.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";
 partInit.code() += "}\n";
 partInit.code() += "etiss_uint32 res1 = mem_val_0;\n";
 if ((rd % 32U) != 0U) {
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = (etiss_int32)(res1);\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = (etiss_int32)(res1);\n";
 }
 partInit.code() += "etiss_uint32 res2 = (res1 < *((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U]) ? (*((RV64IMACFD*)cpu)->X[" + std::to_string(rs2 % 32U) + "U]) : (res1);\n";
 partInit.code() += "etiss_uint32 mem_val_1;\n";
@@ -868,7 +868,7 @@ partInit.code() += "if (cpu->return_pending | cpu->exception) return cpu->except
 
 		partInit.getRegisterDependencies().add(reg_name[rs1 % 32U], 64);
 		partInit.getRegisterDependencies().add(reg_name[rs2 % 32U], 64);
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;

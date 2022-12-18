@@ -1,5 +1,5 @@
 /**
- * Generated on Mon, 05 Dec 2022 22:18:34 +0100.
+ * Generated on Fri, 16 Dec 2022 20:48:36 +0100.
  *
  * This file contains the instruction behavior models of the tum_semihosting
  * instruction set for the RV32IMACFD core architecture.
@@ -62,15 +62,15 @@ partInit.code() += "etiss_uint32 post = (etiss_uint32)(mem_val_2);\n";
 partInit.code() += "if (pre == 32509971U && ebreak == 1048691U && post == 1081102355U) {\n";
 partInit.code() += "etiss_uint32 operation = *((RV32IMACFD*)cpu)->X[10U];\n";
 partInit.code() += "etiss_uint32 parameter = *((RV32IMACFD*)cpu)->X[11U];\n";
-partInit.code() += "*((RV32IMACFD*)cpu)->X[10U] = (etiss_int32)(etiss_semihost(cpu, system, plugin_pointers, " + std::to_string(32) + "U, operation, parameter));\n";
+partInit.code() += "*((RV32IMACFD*)cpu)->X[10U] = (etiss_int32)(etiss_semihost(cpu, system, plugin_pointers, 32U, operation, parameter));\n";
 partInit.code() += "}\n";
 partInit.code() += "else {\n";
-partInit.code() += "cpu->exception = 0; raise(cpu, system, plugin_pointers, 0U, " + std::to_string(3) + "U);\n";
+partInit.code() += "cpu->exception = 0; raise(cpu, system, plugin_pointers, 0U, 3);\n";
 partInit.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";\n";
 partInit.code() += "}\n";
 partInit.code() += "}\n";
 partInit.code() += "else {\n";
-partInit.code() += "cpu->exception = 0; raise(cpu, system, plugin_pointers, 0U, " + std::to_string(3) + "U);\n";
+partInit.code() += "cpu->exception = 0; raise(cpu, system, plugin_pointers, 0U, 3);\n";
 partInit.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";\n";
 partInit.code() += "}\n";
 partInit.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";

@@ -1,5 +1,5 @@
 /**
- * Generated on Mon, 05 Dec 2022 22:18:34 +0100.
+ * Generated on Fri, 16 Dec 2022 20:48:36 +0100.
  *
  * This file contains the instruction behavior models of the tum_rva
  * instruction set for the RV64IMACFD core architecture.
@@ -59,7 +59,7 @@ partInit.code() += "}\n";
 partInit.code() += "etiss_int32 res = (etiss_int32)(mem_val_0);\n";
 partInit.code() += "((RV64IMACFD*)cpu)->RES_ADDR = offs;\n";
 if (rd) {
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = (etiss_int64)(res);\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = (etiss_int64)(res);\n";
 }
 partInit.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
 partInit.code() += "cpu->instructionPointer = cpu->nextPc;\n";
@@ -67,7 +67,7 @@ partInit.code() += "if (cpu->return_pending | cpu->exception) return cpu->except
 // -----------------------------------------------------------------------------
 
 		partInit.getRegisterDependencies().add(reg_name[rs1 % 32U], 64);
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;
@@ -148,7 +148,7 @@ partInit.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";
 partInit.code() += "}\n";
 partInit.code() += "}\n";
 if (rd) {
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = ((RV64IMACFD*)cpu)->RES_ADDR != offs;\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = ((RV64IMACFD*)cpu)->RES_ADDR != offs;\n";
 }
 partInit.code() += "((RV64IMACFD*)cpu)->RES_ADDR = -1L;\n";
 partInit.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
@@ -158,7 +158,7 @@ partInit.code() += "if (cpu->return_pending | cpu->exception) return cpu->except
 
 		partInit.getRegisterDependencies().add(reg_name[rs1 % 32U], 64);
 		partInit.getRegisterDependencies().add(reg_name[rs2 % 32U], 64);
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;

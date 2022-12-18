@@ -1,5 +1,5 @@
 /**
- * Generated on Mon, 05 Dec 2022 22:18:34 +0100.
+ * Generated on Fri, 16 Dec 2022 20:48:36 +0100.
  *
  * This file contains the instruction behavior models of the RV32D
  * instruction set for the RV64IMACFD core architecture.
@@ -1352,7 +1352,7 @@ partInit.code() += "cpu->nextPc = " + std::to_string(ic.current_address_ + 4UL) 
 partInit.code() += "etiss_uint64 res = 0U;\n";
 partInit.code() += "res = fcmp_d(((RV64IMACFD*)cpu)->F[" + std::to_string(rs1) + "U], ((RV64IMACFD*)cpu)->F[" + std::to_string(rs2) + "U], 0U);\n";
 if ((rd % 32U) != 0U) {
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = res;\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = res;\n";
 }
 partInit.code() += "etiss_uint32 flags = fget_flags();\n";
 partInit.code() += "((RV64IMACFD*)cpu)->FCSR = (((RV64IMACFD*)cpu)->FCSR & -32L) | (flags & 31U);\n";
@@ -1360,7 +1360,7 @@ partInit.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
 partInit.code() += "cpu->instructionPointer = cpu->nextPc;\n";
 // -----------------------------------------------------------------------------
 
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;
@@ -1424,7 +1424,7 @@ partInit.code() += "cpu->nextPc = " + std::to_string(ic.current_address_ + 4UL) 
 partInit.code() += "etiss_uint64 res = 0U;\n";
 partInit.code() += "res = fcmp_d(((RV64IMACFD*)cpu)->F[" + std::to_string(rs1) + "U], ((RV64IMACFD*)cpu)->F[" + std::to_string(rs2) + "U], 2U);\n";
 if ((rd % 32U) != 0U) {
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = res;\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = res;\n";
 }
 partInit.code() += "etiss_uint32 flags = fget_flags();\n";
 partInit.code() += "((RV64IMACFD*)cpu)->FCSR = (((RV64IMACFD*)cpu)->FCSR & -32L) | (flags & 31U);\n";
@@ -1432,7 +1432,7 @@ partInit.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
 partInit.code() += "cpu->instructionPointer = cpu->nextPc;\n";
 // -----------------------------------------------------------------------------
 
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;
@@ -1496,7 +1496,7 @@ partInit.code() += "cpu->nextPc = " + std::to_string(ic.current_address_ + 4UL) 
 partInit.code() += "etiss_uint64 res = 0U;\n";
 partInit.code() += "res = fcmp_d(((RV64IMACFD*)cpu)->F[" + std::to_string(rs1) + "U], ((RV64IMACFD*)cpu)->F[" + std::to_string(rs2) + "U], 1U);\n";
 if ((rd % 32U) != 0U) {
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = res;\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = res;\n";
 }
 partInit.code() += "etiss_uint32 flags = fget_flags();\n";
 partInit.code() += "((RV64IMACFD*)cpu)->FCSR = (((RV64IMACFD*)cpu)->FCSR & -32L) | (flags & 31U);\n";
@@ -1504,7 +1504,7 @@ partInit.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
 partInit.code() += "cpu->instructionPointer = cpu->nextPc;\n";
 // -----------------------------------------------------------------------------
 
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;
@@ -1562,12 +1562,12 @@ rs1 += R_rs1_0.read(ba) << 0;
 
 // -----------------------------------------------------------------------------
 partInit.code() += "cpu->nextPc = " + std::to_string(ic.current_address_ + 4UL) + "U;\n";
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = fclass_d((etiss_uint64)(((RV64IMACFD*)cpu)->F[" + std::to_string(rs1) + "U]));\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = fclass_d((etiss_uint64)(((RV64IMACFD*)cpu)->F[" + std::to_string(rs1) + "U]));\n";
 partInit.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
 partInit.code() += "cpu->instructionPointer = cpu->nextPc;\n";
 // -----------------------------------------------------------------------------
 
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;
@@ -1628,7 +1628,7 @@ partInit.code() += "cpu->nextPc = " + std::to_string(ic.current_address_ + 4UL) 
 partInit.code() += "etiss_int32 res = 0U;\n";
 partInit.code() += "res = fcvt_64_32(((RV64IMACFD*)cpu)->F[" + std::to_string(rs1) + "U], 0U, " + std::to_string(rm) + "U);\n";
 if ((rd % 32U) != 0U) {
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = res;\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = res;\n";
 }
 partInit.code() += "etiss_uint32 flags = fget_flags();\n";
 partInit.code() += "((RV64IMACFD*)cpu)->FCSR = (((RV64IMACFD*)cpu)->FCSR & -32L) | (flags & 31U);\n";
@@ -1636,7 +1636,7 @@ partInit.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
 partInit.code() += "cpu->instructionPointer = cpu->nextPc;\n";
 // -----------------------------------------------------------------------------
 
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;
@@ -1700,7 +1700,7 @@ partInit.code() += "cpu->nextPc = " + std::to_string(ic.current_address_ + 4UL) 
 partInit.code() += "etiss_uint32 res = 0U;\n";
 partInit.code() += "res = fcvt_64_32(((RV64IMACFD*)cpu)->F[" + std::to_string(rs1) + "U], 1U, " + std::to_string(rm) + "U);\n";
 if ((rd % 32U) != 0U) {
-partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32) + "U] = (etiss_uint64)((etiss_int32)(res));\n";
+partInit.code() += "*((RV64IMACFD*)cpu)->X[" + std::to_string(rd % 32U) + "U] = (etiss_uint64)((etiss_int32)(res));\n";
 }
 partInit.code() += "etiss_uint32 flags = fget_flags();\n";
 partInit.code() += "((RV64IMACFD*)cpu)->FCSR = (((RV64IMACFD*)cpu)->FCSR & -32L) | (flags & 31U);\n";
@@ -1708,7 +1708,7 @@ partInit.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
 partInit.code() += "cpu->instructionPointer = cpu->nextPc;\n";
 // -----------------------------------------------------------------------------
 
-		partInit.getAffectedRegisters().add(reg_name[rd % 32], 64);
+		partInit.getAffectedRegisters().add(reg_name[rd % 32U], 64);
 		partInit.getAffectedRegisters().add("instructionPointer", 32);
 
 		return true;
