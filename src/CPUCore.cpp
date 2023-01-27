@@ -785,7 +785,10 @@ etiss::int32 CPUCore::execute(ETISS_System &_system)
                         etiss::log(etiss::WARNING, stream.str());
                         // check transerror != NOERROR
                         exception = translation.getTranslationError();
-                        etiss_CPUCore_handleException(cpu_, exception, blptr, translation, arch_.get()); // handle exception
+                        if (exception == 0)
+                            exception = RETURNCODE::JITCOMPILATIONERROR;
+                        else
+                            etiss_CPUCore_handleException(cpu_, exception, blptr, translation, arch_.get()); // handle exception
                         if (unlikely(exception != RETURNCODE::NOERROR)) // check if exception handling failed
                         {
                             goto loopexit; // exception; terminate cpu
