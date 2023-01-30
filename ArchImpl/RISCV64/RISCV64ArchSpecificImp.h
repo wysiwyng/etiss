@@ -121,7 +121,7 @@ etiss::int32 RISCV64Arch::handleException(etiss::int32 cause, ETISS_CPU *cpu)
                 // Pop MPIE to MIE
                 (((RISCV64 *)cpu)->CSR[CSR_MSTATUS]) ^=
                     (((((RISCV64 *)cpu)->CSR[CSR_MSTATUS]) & MSTATUS_MPIE) >> 4) ^ ((((RISCV64 *)cpu)->CSR[CSR_MSTATUS]) & MSTATUS_MIE);
-                ((RISCV64 *)cpu)->CSR[CSR_SCAUSE] = causeCode;                
+                ((RISCV64 *)cpu)->CSR[CSR_SCAUSE] = causeCode;
                 switch (causeCode)
                 {
                     case CAUSE_FETCH_PAGE_FAULT:    [[fallthrough]];
@@ -134,7 +134,7 @@ etiss::int32 RISCV64Arch::handleException(etiss::int32 cause, ETISS_CPU *cpu)
                     case CAUSE_LOAD_PAGE_FAULT:     [[fallthrough]];
                     case CAUSE_LOAD_ACCESS:         [[fallthrough]];
                     case CAUSE_MISALIGNED_LOAD:     [[fallthrough]];
-                    case CAUSE_STORE_PAGE_FAULT:    [[fallthrough]];            
+                    case CAUSE_STORE_PAGE_FAULT:    [[fallthrough]];
                     case CAUSE_STORE_ACCESS:        [[fallthrough]];
                     case CAUSE_MISALIGNED_STORE:
                         // Redo the instruction encoutered exception after handling
@@ -150,7 +150,7 @@ etiss::int32 RISCV64Arch::handleException(etiss::int32 cause, ETISS_CPU *cpu)
                 }
                 ((RISCV64 *)cpu)->CSR[CSR_SSTATUS] ^=
                     (((RISCV64 *)cpu)->CSR[3088] << 8) ^ (((RISCV64 *)cpu)->CSR[CSR_SSTATUS] & MSTATUS_SPP);
-                // Since traps can only be delegated to S-mode, if it originated in S/U-mode, 
+                // Since traps can only be delegated to S-mode, if it originated in S/U-mode,
                 // trapframes can be accessed without context-switches. Those occur in the traphandler.
                 ((RISCV64 *)cpu)->CSR[3088] = PRV_S;
                 etiss::log(etiss::VERBOSE, "Privilege mode is changed to supervisor mode:" + etiss::toString(PRV_S));
@@ -171,7 +171,7 @@ etiss::int32 RISCV64Arch::handleException(etiss::int32 cause, ETISS_CPU *cpu)
                     case CAUSE_LOAD_PAGE_FAULT:     [[fallthrough]];
                     case CAUSE_LOAD_ACCESS:         [[fallthrough]];
                     case CAUSE_MISALIGNED_LOAD:     [[fallthrough]];
-                    case CAUSE_STORE_PAGE_FAULT:    [[fallthrough]];            
+                    case CAUSE_STORE_PAGE_FAULT:    [[fallthrough]];
                     case CAUSE_STORE_ACCESS:        [[fallthrough]];
                     case CAUSE_MISALIGNED_STORE:
                         // Redo the instruction encoutered exception after handling
@@ -221,7 +221,7 @@ etiss::int32 RISCV64Arch::handleException(etiss::int32 cause, ETISS_CPU *cpu)
                 ((RISCV64 *)cpu)->CSR[CSR_SEPC] = cpu->instructionPointer;
                 ((RISCV64 *)cpu)->CSR[CSR_SSTATUS] ^=
                     (((RISCV64 *)cpu)->CSR[3088] << 8) ^ (((RISCV64 *)cpu)->CSR[CSR_SSTATUS] & MSTATUS_SPP);
-                // Since traps can only be delegated to S-mode, if it originated in S/U-mode, 
+                // Since traps can only be delegated to S-mode, if it originated in S/U-mode,
                 // trapframes can be accessed without context-switches. Those occur in the traphandler.
                 ((RISCV64 *)cpu)->CSR[3088] = PRV_S;
                 etiss::log(etiss::VERBOSE, "Privilege mode is changed to supervisor mode:" + etiss::toString(PRV_S));
@@ -485,6 +485,29 @@ void RISCV64Arch::initInstrSet(etiss::instr::ModedInstructionSet &mis) const
 
     using namespace etiss;
     using namespace etiss::instr;
+
+    vis->foreach(
+        [](InstructionSet &is) {
+            is.getInvalid().addCallback(
+                [](BitArray &ba, CodeSet &cs, InstructionContext &ic) {
+                    etiss_uint32 error_code = 0;
+                    static BitArrayRange R_error_code_0(31, 0);
+                    error_code += R_error_code_0.read(ba) << 0;
+
+                    std::stringstream ss;
+                    ss << "\t\t//trap_entry 32\n";
+                    ss << "\t\treturn " << std::to_string(error_code) << "U;";
+                    //#if DEBUG
+                    ss << " // @0x" << std::hex << ic.current_address_ << std::dec << ": " << ba;
+                    //#endif
+                    ss << "\n";
+                    cs.append(CodePart::APPENDEDRETURNINGREQUIRED).code() = ss.str();
+                    return true;
+                },
+                0);
+        }
+    );
+
     vis->length_updater_ = [](VariableInstructionSet &, InstructionContext &ic, BitArray &ba) {
         std::function<void(InstructionContext & ic, etiss_uint32 opRd)> updateRiscvInstrLength =
             [](InstructionContext &ic, etiss_uint32 opRd) {
