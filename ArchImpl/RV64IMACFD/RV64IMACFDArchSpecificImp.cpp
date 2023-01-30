@@ -29,13 +29,8 @@
 */
 etiss::int32 RV64IMACFDArch::handleException(etiss::int32 cause, ETISS_CPU * cpu)
 {
-	etiss_uint32 handledCause = cause;
-
-	/**************************************************************************
-	*		 Exception handling machanism should be implemented here		  *
-	***************************************************************************/
-
-	return handledCause;
+    etiss::log(etiss::WARNING, "in old exception handler");
+    return cause;
 }
 
 /**
@@ -104,7 +99,7 @@ void RV64IMACFDArch::initInstrSet(etiss::instr::ModedInstructionSet & mis) const
 	vis->get(32)->getInvalid().addCallback(
 	[] (BitArray & ba,etiss::CodeSet & cs,InstructionContext & ic)
 	{
-
+std::cout << "generating trap 32" << std::endl;
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
@@ -116,19 +111,28 @@ error_code += R_error_code_0.read(ba) << 0;
 
 // -----------------------------------------------------------------------------
 
-		CodePart & partInit = cs.append(CodePart::INITIALREQUIRED);
+	{
+		CodePart & cp = cs.append(CodePart::INITIALREQUIRED);
 
-		partInit.code() = std::string("//trap_entry 32\n");
+		cp.code() = std::string("//trap_entry 32\n");
 
 // -----------------------------------------------------------------------------
-partInit.code() += "translate_exc_code(cpu, system, plugin_pointers, " + std::to_string(error_code) + "U);\n";
-partInit.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";\n";
-partInit.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
-partInit.code() += "cpu->instructionPointer = cpu->nextPc;\n";
-partInit.code() += "return cpu->exception;\n";
+cp.code() += "translate_exc_code(cpu, system, plugin_pointers, " + std::to_string(error_code) + "U);\n";
+cp.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";\n";
+cp.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
+cp.code() += "cpu->instructionPointer = cpu->nextPc;\n";
 // -----------------------------------------------------------------------------
+		cp.getAffectedRegisters().add("instructionPointer", 32);
+	}
+	{
+		CodePart & cp = cs.append(CodePart::APPENDEDRETURNINGREQUIRED);
 
-		partInit.getAffectedRegisters().add("instructionPointer", 32);
+		cp.code() = std::string("//trap_entry 32\n");
+
+// -----------------------------------------------------------------------------
+cp.code() += "return cpu->exception;\n";
+// -----------------------------------------------------------------------------
+	}
 
 		return true;
 	},
@@ -138,7 +142,7 @@ partInit.code() += "return cpu->exception;\n";
 	vis->get(16)->getInvalid().addCallback(
 	[] (BitArray & ba,etiss::CodeSet & cs,InstructionContext & ic)
 	{
-
+std::cout << "generating trap 16" << std::endl;
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
@@ -150,19 +154,28 @@ error_code += R_error_code_0.read(ba) << 0;
 
 // -----------------------------------------------------------------------------
 
-		CodePart & partInit = cs.append(CodePart::INITIALREQUIRED);
+	{
+		CodePart & cp = cs.append(CodePart::INITIALREQUIRED);
 
-		partInit.code() = std::string("//trap_entry 16\n");
+		cp.code() = std::string("//trap_entry 16\n");
 
 // -----------------------------------------------------------------------------
-partInit.code() += "translate_exc_code(cpu, system, plugin_pointers, " + std::to_string(error_code) + "U);\n";
-partInit.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";\n";
-partInit.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
-partInit.code() += "cpu->instructionPointer = cpu->nextPc;\n";
-partInit.code() += "return cpu->exception;\n";
+cp.code() += "translate_exc_code(cpu, system, plugin_pointers, " + std::to_string(error_code) + "U);\n";
+cp.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";\n";
+cp.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
+cp.code() += "cpu->instructionPointer = cpu->nextPc;\n";
 // -----------------------------------------------------------------------------
+		cp.getAffectedRegisters().add("instructionPointer", 32);
+	}
+	{
+		CodePart & cp = cs.append(CodePart::APPENDEDRETURNINGREQUIRED);
 
-		partInit.getAffectedRegisters().add("instructionPointer", 32);
+		cp.code() = std::string("//trap_entry 16\n");
+
+// -----------------------------------------------------------------------------
+cp.code() += "return cpu->exception;\n";
+// -----------------------------------------------------------------------------
+	}
 
 		return true;
 	},
