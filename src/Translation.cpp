@@ -480,27 +480,20 @@ etiss::int32 Translation::translateBlock(CodeBlock &cb)
         // read instruction
         etiss::int32 ret = (*system_.dbg_read)(system_.handle, cb.endaddress_, (etiss_uint8 *)mainba.internalBuffer(),
                                                mainba.byteCount()); // read instruction
-        if (ret == etiss::RETURNCODE::IBUS_READ_ERROR || ret == etiss::RETURNCODE::DBUS_READ_ERROR)
+
+        if (ret == etiss::RETURNCODE::DBUS_READ_ERROR) ret = etiss::RETURNCODE::IBUS_READ_ERROR;
+        if (ret == etiss::RETURNCODE::LOAD_PAGEFAULT) ret = etiss::RETURNCODE::INSTR_PAGEFAULT;
+
+        if (ret != etiss::RETURNCODE::NOERROR)
         {
             std::cout << "Instruction bus read error while translating!" << std::endl;
-            errba = etiss::RETURNCODE::IBUS_READ_ERROR;
+            errba = ret;
             // std::cout << "mainba.byteCount = " << mainba.byteCount() << std::endl;
             auto instr = &vis_->getMain()->getInvalid();
             CodeBlock::Line &line = cb.append(cb.endaddress_); // allocate codeset for instruction
             bool ok = instr->translate(errba, line.getCodeSet(), context);
             cb.endaddress_ += mainba.byteCount(); // update end address
             return etiss::RETURNCODE::NOERROR;
-        }
-        if (ret != etiss::RETURNCODE::NOERROR)
-        {
-            if (count == 0)
-            {
-                return ret; // empty block -> return error
-            }
-            else
-            {
-                break; // non empty block -> compile pending
-            }
         }
 
         arch_->compensateEndianess(&cpu_, mainba);
@@ -590,7 +583,7 @@ void Translation::unloadBlocksAll()
 {
     for (auto &entry:blockmap_)
     {
-        entry.second.erase(std::remove_if(entry.second.begin(), entry.second.end(), 
+        entry.second.erase(std::remove_if(entry.second.begin(), entry.second.end(),
                             [](auto &bl)
                             {
                                 bl->valid = false;
