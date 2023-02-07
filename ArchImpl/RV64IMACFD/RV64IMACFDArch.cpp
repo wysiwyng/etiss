@@ -35,6 +35,7 @@
  *********************************************************************************************************************************/
 
 #include "RV64IMACFDArch.h"
+#include "RV64IMACFD_MMU.h"
 
 #define ETISS_ARCH_STATIC_FN_ONLY
 #include "RV64IMACFDFuncs.h"
@@ -58,6 +59,11 @@ ETISS_CPU * RV64IMACFDArch::newCPU()
 	ETISS_CPU * ret = (ETISS_CPU *) new RV64IMACFD() ;
 	resetCPU (ret, 0);
 	return ret;
+}
+
+etiss::mm::MMU *RV64IMACFDArch::newMMU(ETISS_CPU *cpu)
+{
+	return (etiss::mm::MMU *)new RV64IMACFD_MMU(false);
 }
 
 void RV64IMACFDArch::resetCPU(ETISS_CPU * cpu,etiss::uint64 * startpointer)

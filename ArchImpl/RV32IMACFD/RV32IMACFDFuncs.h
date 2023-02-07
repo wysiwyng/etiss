@@ -1,5 +1,5 @@
 /**
- * Generated on Fri, 16 Dec 2022 20:48:36 +0100.
+ * Generated on Wed, 01 Feb 2023 16:11:45 +0100.
  *
  * This file contains the function macros for the RV32IMACFD core architecture.
  */
@@ -17,11 +17,11 @@
 
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline void leave(etiss_int32 priv_lvl);
+extern void leave(etiss_int32 priv_lvl);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline void wait(etiss_int32 flag);
+extern void wait(etiss_int32 flag);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
@@ -32,111 +32,115 @@ return (*((RV32IMACFD*)cpu)->CSR[769] >> (extension - 65U)) & 1U;
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint32 fadd_s(etiss_uint32, etiss_uint32, etiss_uint8);
+extern etiss_uint32 fadd_s(etiss_uint32, etiss_uint32, etiss_uint8);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint32 fsub_s(etiss_uint32, etiss_uint32, etiss_uint8);
+extern etiss_uint32 fsub_s(etiss_uint32, etiss_uint32, etiss_uint8);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint32 fmul_s(etiss_uint32, etiss_uint32, etiss_uint8);
+extern etiss_uint32 fmul_s(etiss_uint32, etiss_uint32, etiss_uint8);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint32 fdiv_s(etiss_uint32, etiss_uint32, etiss_uint8);
+extern etiss_uint32 fdiv_s(etiss_uint32, etiss_uint32, etiss_uint8);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint32 fmadd_s(etiss_uint32, etiss_uint32, etiss_uint32, etiss_uint32, etiss_uint8);
+extern etiss_uint32 fmadd_s(etiss_uint32, etiss_uint32, etiss_uint32, etiss_uint32, etiss_uint8);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint32 fsel_s(etiss_uint32, etiss_uint32, etiss_uint32);
+extern etiss_uint32 fsel_s(etiss_uint32, etiss_uint32, etiss_uint32);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint32 fsqrt_s(etiss_uint32, etiss_uint8);
+extern etiss_uint32 fsqrt_s(etiss_uint32, etiss_uint8);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint32 fcmp_s(etiss_uint32, etiss_uint32, etiss_uint32);
+extern etiss_uint32 fcmp_s(etiss_uint32, etiss_uint32, etiss_uint32);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint32 fcvt_s(etiss_uint32, etiss_uint32, etiss_uint8);
+extern etiss_uint32 fcvt_s(etiss_uint32, etiss_uint32, etiss_uint8);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint64 fcvt_32_64(etiss_uint32, etiss_uint32, etiss_uint8);
+extern etiss_uint64 fcvt_32_64(etiss_uint32, etiss_uint32, etiss_uint8);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint32 fcvt_64_32(etiss_uint64, etiss_uint32, etiss_uint8);
+extern etiss_uint32 fcvt_64_32(etiss_uint64, etiss_uint32, etiss_uint8);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint32 unbox_s(etiss_uint64);
+extern etiss_uint32 unbox_s(etiss_uint64);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint32 fclass_s(etiss_uint32);
+extern etiss_uint32 fclass_s(etiss_uint32);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint32 fget_flags();
+extern etiss_uint32 fget_flags();
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint64 fadd_d(etiss_uint64, etiss_uint64, etiss_uint8);
+extern etiss_uint64 fadd_d(etiss_uint64, etiss_uint64, etiss_uint8);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint64 fsub_d(etiss_uint64, etiss_uint64, etiss_uint8);
+extern etiss_uint64 fsub_d(etiss_uint64, etiss_uint64, etiss_uint8);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint64 fmul_d(etiss_uint64, etiss_uint64, etiss_uint8);
+extern etiss_uint64 fmul_d(etiss_uint64, etiss_uint64, etiss_uint8);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint64 fdiv_d(etiss_uint64, etiss_uint64, etiss_uint8);
+extern etiss_uint64 fdiv_d(etiss_uint64, etiss_uint64, etiss_uint8);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint64 fmadd_d(etiss_uint64, etiss_uint64, etiss_uint64, etiss_uint32, etiss_uint8);
+extern etiss_uint64 fmadd_d(etiss_uint64, etiss_uint64, etiss_uint64, etiss_uint32, etiss_uint8);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint64 fsel_d(etiss_uint64, etiss_uint64, etiss_uint32);
+extern etiss_uint64 fsel_d(etiss_uint64, etiss_uint64, etiss_uint32);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint64 fsqrt_d(etiss_uint64, etiss_uint8);
+extern etiss_uint64 fsqrt_d(etiss_uint64, etiss_uint8);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint64 fcmp_d(etiss_uint64, etiss_uint64, etiss_uint32);
+extern etiss_uint64 fcmp_d(etiss_uint64, etiss_uint64, etiss_uint32);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint64 fcvt_d(etiss_uint64, etiss_uint32, etiss_uint8);
+extern etiss_uint64 fcvt_d(etiss_uint64, etiss_uint32, etiss_uint8);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint32 fconv_d2f(etiss_uint64, etiss_uint8);
+extern etiss_uint32 fconv_d2f(etiss_uint64, etiss_uint8);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint64 fconv_f2d(etiss_uint32, etiss_uint8);
+extern etiss_uint64 fconv_f2d(etiss_uint32, etiss_uint8);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint64 unbox_d(etiss_uint64);
+extern etiss_uint64 unbox_d(etiss_uint64);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint64 fclass_d(etiss_uint64);
+extern etiss_uint64 fclass_d(etiss_uint64);
+#endif
+
+#ifndef ETISS_ARCH_STATIC_FN_ONLY
+extern void etiss_icache_flush(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers);
 #endif
 static inline etiss_uint64 get_field(etiss_uint64 reg, etiss_uint64 mask)
 {
@@ -187,6 +191,9 @@ return;
  else if (cause == -5) {
 code = 5;
 }
+ else if (cause == -13) {
+code = 12;
+}
  else if (cause == -14) {
 code = 13;
 }
@@ -207,15 +214,19 @@ cpu->exception = 0; raise(cpu, system, plugin_pointers, 0U, code);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint64 etiss_get_cycles(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers);
+extern etiss_int32 ETISS_SIGNAL_MMU(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers, etiss_uint32 mmu_signal_);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint64 etiss_get_time();
+extern etiss_uint64 etiss_get_cycles(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint64 etiss_get_instret(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers);
+extern etiss_uint64 etiss_get_time();
+#endif
+
+#ifndef ETISS_ARCH_STATIC_FN_ONLY
+extern etiss_uint64 etiss_get_instret(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers);
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
@@ -307,14 +318,17 @@ if (csr == 1) {
  else if (csr != 769) {
 *((RV32IMACFD*)cpu)->CSR[csr] = val;
 }
+if (csr == 384) {
+ETISS_SIGNAL_MMU(cpu, system, plugin_pointers, val);
+}
 }
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_uint8 etiss_semihost_enabled();
+extern etiss_uint8 etiss_semihost_enabled();
 #endif
 
 #ifndef ETISS_ARCH_STATIC_FN_ONLY
-static inline etiss_int64 etiss_semihost(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers, etiss_uint32 XLEN, etiss_uint64 operation, etiss_uint64 parameter);
+extern etiss_int64 etiss_semihost(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers, etiss_uint32 XLEN, etiss_uint64 operation, etiss_uint64 parameter);
 #endif
 #endif

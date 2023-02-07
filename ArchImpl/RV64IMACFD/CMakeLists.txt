@@ -9,6 +9,7 @@ ADD_LIBRARY(${PROJECT_NAME} SHARED
 	RV64IMACFDArchLib.cpp
 	RV64IMACFDArchSpecificImp.cpp
 	RV64IMACFDInstr.cpp
+	RV64IMACFD_MMU.cpp
 	RV64IMACFD_RV32IInstr.cpp
 	RV64IMACFD_RV64IInstr.cpp
 	RV64IMACFD_RV32ICInstr.cpp
@@ -28,6 +29,7 @@ ADD_LIBRARY(${PROJECT_NAME} SHARED
 	RV64IMACFD_tum_rvaInstr.cpp
 	RV64IMACFD_tum_rva64Instr.cpp
 	RV64IMACFD_tum_semihostingInstr.cpp
+	RV64IMACFD_tum_sfenceInstr.cpp
 )
 
 add_custom_command(

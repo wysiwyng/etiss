@@ -97,6 +97,8 @@ public:
 	*/
 	virtual etiss::plugin::gdb::GDBCore & getGDBCore();
 
+	etiss::mm::MMU *newMMU(ETISS_CPU *cpu);
+
 private:
 	std::set<std::string> listenerSupportedRegisters_;
 	std::set<std::string> headers_;

@@ -1,5 +1,5 @@
 /**
- * Generated on Thu, 26 Jan 2023 18:44:34 +0100.
+ * Generated on Wed, 01 Feb 2023 16:11:45 +0100.
  *
  * This file contains the instruction behavior models of the tum_ret
  * instruction set for the RV64IMACFD core architecture.
@@ -47,6 +47,9 @@ cp.code() += "etiss_uint64 s = *((RV64IMACFD*)cpu)->CSR[768];\n";
 cp.code() += "etiss_uint64 prev_prv = get_field(s, 6144);\n";
 cp.code() += "if (prev_prv != 3L) {\n";
 cp.code() += "s = set_field(s, 131072, 0U);\n";
+cp.code() += "}\n";
+cp.code() += "if (prev_prv != ((RV64IMACFD*)cpu)->PRIV && *((RV64IMACFD*)cpu)->CSR[384] != 0UL) {\n";
+cp.code() += "etiss_icache_flush(cpu, system, plugin_pointers);\n";
 cp.code() += "}\n";
 cp.code() += "s = set_field(s, 8, get_field(s, 128));\n";
 cp.code() += "s = set_field(s, 128, 1U);\n";
