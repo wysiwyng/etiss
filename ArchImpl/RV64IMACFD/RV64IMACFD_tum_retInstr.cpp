@@ -1,5 +1,5 @@
 /**
- * Generated on Wed, 01 Feb 2023 16:11:45 +0100.
+ * Generated on Thu, 09 Feb 2023 10:08:35 +0100.
  *
  * This file contains the instruction behavior models of the tum_ret
  * instruction set for the RV64IMACFD core architecture.
@@ -13,6 +13,64 @@
 using namespace etiss;
 using namespace etiss::instr;
 
+
+// ECALL -----------------------------------------------------------------------
+static InstructionDefinition ecall_ (
+	ISA32_RV64IMACFD,
+	"ecall",
+	(uint32_t) 0x000073,
+	(uint32_t) 0xffffffff,
+	[] (BitArray & ba,etiss::CodeSet & cs,InstructionContext & ic)
+	{
+
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+
+	{
+		CodePart & cp = cs.append(CodePart::INITIALREQUIRED);
+
+		cp.code() = std::string("//ECALL\n");
+
+// -----------------------------------------------------------------------------
+cp.code() += "cpu->nextPc = " + std::to_string(ic.current_address_ + 4UL) + "U;\n";
+cp.code() += "cpu->exception = 0; raise(cpu, system, plugin_pointers, 0U, 8 + ((RV64IMACFD*)cpu)->PRIV);\n";
+cp.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";\n";
+cp.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
+cp.code() += "cpu->instructionPointer = cpu->nextPc;\n";
+// -----------------------------------------------------------------------------
+		cp.getAffectedRegisters().add("instructionPointer", 32);
+	}
+	{
+		CodePart & cp = cs.append(CodePart::APPENDEDRETURNINGREQUIRED);
+
+		cp.code() = std::string("//ECALL\n");
+
+// -----------------------------------------------------------------------------
+cp.code() += "return cpu->exception;\n";
+// -----------------------------------------------------------------------------
+	}
+
+		return true;
+	},
+	0,
+	[] (BitArray & ba, Instruction & instr)
+	{
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+
+		std::stringstream ss;
+// -----------------------------------------------------------------------------
+ss << "ecall" << " # " << ba << (" []");
+// -----------------------------------------------------------------------------
+		return ss.str();
+	}
+);
 
 // MRET ------------------------------------------------------------------------
 static InstructionDefinition mret_ (

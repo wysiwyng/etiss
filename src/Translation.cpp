@@ -512,18 +512,22 @@ etiss::int32 Translation::translateBlock(CodeBlock &cb)
                 secba = new etiss::instr::BitArray(context.instr_width_);
                 ret = (*system_.dbg_read)(system_.handle, cb.endaddress_, (etiss_uint8 *)secba->internalBuffer(),
                                           secba->byteCount()); // read instruction
+
+                if (ret == etiss::RETURNCODE::DBUS_READ_ERROR) ret = etiss::RETURNCODE::IBUS_READ_ERROR;
+                if (ret == etiss::RETURNCODE::LOAD_PAGEFAULT) ret = etiss::RETURNCODE::INSTR_PAGEFAULT;
+
                 if (ret != etiss::RETURNCODE::NOERROR)
                 {
-                    if (count == 0)
-                    {
-                        delete secba;
-                        return ret; // empty block -> return error
-                    }
-                    else
-                    {
-                        break; // non empty block -> compile pending
-                    }
+                    std::cout << "Instruction bus read error while translating!" << std::endl;
+                    errba = ret;
+                    // std::cout << "mainba.byteCount = " << mainba.byteCount() << std::endl;
+                    auto instr = &vis_->getMain()->getInvalid();
+                    CodeBlock::Line &line = cb.append(cb.endaddress_); // allocate codeset for instruction
+                    bool ok = instr->translate(errba, line.getCodeSet(), context);
+                    cb.endaddress_ += mainba.byteCount(); // update end address
+                    return etiss::RETURNCODE::NOERROR;
                 }
+
                 arch_->compensateEndianess(&cpu_, *secba);
                 // secba->recoverFromEndianness(4,etiss::_BIG_ENDIAN_);
                 vis_->length_updater_(*vis_, context, *secba);
