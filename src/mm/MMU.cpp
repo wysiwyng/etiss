@@ -284,11 +284,6 @@ using namespace etiss;
 
 extern "C"
 {
-    void etiss_icache_flush(ETISS_CPU *cpu, ETISS_System * const system, void * const * const plugin_pointers)
-    {
-        cpu->exception = etiss::RETURNCODE::RELOADBLOCKS;
-    }
-
     int32_t ETISS_SIGNAL_MMU(ETISS_CPU *cpu, ETISS_System * const system, void * const * const plugin_pointers, etiss_uint64 mmu_signal_)
     {
         CPUCore *core = (CPUCore *)cpu->_etiss_private_handle_;

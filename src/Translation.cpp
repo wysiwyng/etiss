@@ -526,7 +526,7 @@ etiss::int32 Translation::translateBlock(CodeBlock &cb)
                 if (ret != etiss::RETURNCODE::NOERROR)
                 {
                     std::cout << "Instruction bus read error while translating!" << std::endl;
-                    errba = ret;
+                    errba.set_value(ret);
                     // std::cout << "mainba.byteCount = " << mainba.byteCount() << std::endl;
                     auto instr = &vis_->getMain()->getInvalid();
                     CodeBlock::Line &line = cb.append(cb.endaddress_); // allocate codeset for instruction
