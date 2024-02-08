@@ -47,6 +47,12 @@
 
 #include "etiss/jit/ReturnCode.h"
 
+// Debug
+int32_t tlb_overlap_handler(int32_t fault, MMU *mmu, uint64_t vma, MM_ACCESS access)
+{
+    return etiss::RETURNCODE::NOERROR;
+}
+
 RV64IMACFD_MMU::RV64IMACFD_MMU(bool pid_enabled) : MMU(true, "RISCV-sv39-MMU", pid_enabled)
 {
     // Use builder utility to build up format singleton, bit field for Page Table Entry (PTE)
