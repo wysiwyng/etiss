@@ -1,5 +1,5 @@
 /**
- * Generated on Wed, 12 Oct 2022 12:54:05 +0200.
+ * Generated on Tue, 28 Nov 2023 09:45:19 +0100.
  *
  * This file contains the architecture class for the RV64IMACFD core architecture.
  */
@@ -35,9 +35,6 @@
  *********************************************************************************************************************************/
 
 #include "RV64IMACFDArch.h"
-#include "RV64IMACFD_MMU.h"
-
-#define ETISS_ARCH_STATIC_FN_ONLY
 #include "RV64IMACFDFuncs.h"
 
 #define RV64IMACFD_DEBUG_CALL 0
@@ -129,6 +126,9 @@ void RV64IMACFDArch::resetCPU(ETISS_CPU * cpu,etiss::uint64 * startpointer)
 	rv64imacfdcpu->PRIV = 0;
 	rv64imacfdcpu->DPC = 0;
 	rv64imacfdcpu->FCSR = 0;
+	rv64imacfdcpu->MSTATUS = 0;
+	rv64imacfdcpu->MIE = 0;
+	rv64imacfdcpu->MIP = 0;
 	for (int i = 0; i < 32; ++i) {
 		rv64imacfdcpu->F[i] = 0;
 	}
@@ -167,13 +167,16 @@ void RV64IMACFDArch::resetCPU(ETISS_CPU * cpu,etiss::uint64 * startpointer)
  	rv64imacfdcpu->X[30] = &rv64imacfdcpu->T5;
  	rv64imacfdcpu->X[31] = &rv64imacfdcpu->T6;
  	rv64imacfdcpu->CSR[3] = &rv64imacfdcpu->FCSR;
+ 	rv64imacfdcpu->CSR[768] = &rv64imacfdcpu->MSTATUS;
+ 	rv64imacfdcpu->CSR[772] = &rv64imacfdcpu->MIE;
+ 	rv64imacfdcpu->CSR[836] = &rv64imacfdcpu->MIP;
 
  	rv64imacfdcpu->PRIV = 3;
  	rv64imacfdcpu->DPC = 0;
  	*rv64imacfdcpu->CSR[0] = 11;
 	*rv64imacfdcpu->CSR[256] = 11;
 	*rv64imacfdcpu->CSR[768] = 11;
-	*rv64imacfdcpu->CSR[769] = 9223372036856090925;
+	*rv64imacfdcpu->CSR[769] = 9223372036856090925ULL;
 	*rv64imacfdcpu->CSR[3088] = 3;
 	*rv64imacfdcpu->CSR[772] = 4294966203;
 	*rv64imacfdcpu->CSR[260] = 4294964019;

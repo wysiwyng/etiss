@@ -65,6 +65,7 @@
 #define MAX_MEMSEGS 99
 
 using namespace etiss;
+using namespace ELFIO;
 
 std::unordered_map<std::string, uint32_t> map_messageCounter;
 uint32_t printMessage(std::string key, std::string message, uint32_t maxCount)
@@ -181,13 +182,6 @@ void SimpleMemSystem::load_elf()
             } else {
                 etiss::log(etiss::FATALERROR, "System architecture is neither 64 nor 32 bit!");
             }
-        }
-        else if (reader.get_machine() == EM_OPENRISC)
-        {
-            if ((reader.get_class() == ELFCLASS32))
-                etiss::cfg().set<std::string>("arch.cpu", "OR1K");
-            if ((reader.get_class() == ELFCLASS64))
-                etiss::log(etiss::FATALERROR, "OR1k 64 is not supported");
         }
         else
         {

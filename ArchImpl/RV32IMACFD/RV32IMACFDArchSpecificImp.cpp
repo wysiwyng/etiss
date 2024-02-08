@@ -12,6 +12,7 @@
 
 #include "RV32IMACFDArch.h"
 #include "RV32IMACFDArchSpecificImp.h"
+#include "RV32IMACFDFuncs.h"
 
 /**
 	@brief This function will be called automatically in order to handling exceptions such as interrupt, system call, illegal instructions
@@ -29,8 +30,9 @@
 */
 etiss::int32 RV32IMACFDArch::handleException(etiss::int32 cause, ETISS_CPU * cpu)
 {
-    etiss::log(etiss::WARNING, "in old exception handler");
-    return cause;
+	RV32IMACFD_translate_exc_code(cpu, nullptr, nullptr, cause);
+	cpu->instructionPointer = cpu->nextPc;
+	return 0;
 }
 
 /**
@@ -117,8 +119,12 @@ error_code += R_error_code_0.read(ba) << 0;
 		cp.code() = std::string("//trap_entry 32\n");
 
 // -----------------------------------------------------------------------------
-cp.code() += "translate_exc_code(cpu, system, plugin_pointers, " + std::to_string(error_code) + "U);\n";
+{ // procedure
+cp.code() += "{ // procedure\n";
+cp.code() += "RV32IMACFD_translate_exc_code(cpu, system, plugin_pointers, " + std::to_string(error_code) + "ULL);\n";
 cp.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";\n";
+cp.code() += "} // procedure\n";
+} // procedure
 cp.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
 cp.code() += "cpu->instructionPointer = cpu->nextPc;\n";
 // -----------------------------------------------------------------------------
@@ -160,8 +166,12 @@ error_code += R_error_code_0.read(ba) << 0;
 		cp.code() = std::string("//trap_entry 16\n");
 
 // -----------------------------------------------------------------------------
-cp.code() += "translate_exc_code(cpu, system, plugin_pointers, " + std::to_string(error_code) + "U);\n";
+{ // procedure
+cp.code() += "{ // procedure\n";
+cp.code() += "RV32IMACFD_translate_exc_code(cpu, system, plugin_pointers, " + std::to_string(error_code) + "ULL);\n";
 cp.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";\n";
+cp.code() += "} // procedure\n";
+} // procedure
 cp.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
 cp.code() += "cpu->instructionPointer = cpu->nextPc;\n";
 // -----------------------------------------------------------------------------
@@ -332,15 +342,11 @@ etiss::InterruptVector * RV32IMACFDArch::createInterruptVector(ETISS_CPU * cpu)
 	if (cpu == 0)
 		return 0;
 
-	/**************************************************************************
-	*		            Implementation of interrupt vector              	  *
-	***************************************************************************/
-
-	// This is a default vector, implemented to avoid segfaults. Replace
-	// with actual implementation if necessary.
-
 	std::vector<etiss::uint32 *> vec;
 	std::vector<etiss::uint32 *> mask;
+
+	vec.push_back(&((RV32IMACFD*)cpu)->MIP);
+	mask.push_back(&((RV32IMACFD*)cpu)->MIE);
 
 	return new etiss::MappedInterruptVector<etiss::uint32>(vec, mask);
 }
@@ -348,4 +354,12 @@ etiss::InterruptVector * RV32IMACFDArch::createInterruptVector(ETISS_CPU * cpu)
 void RV32IMACFDArch::deleteInterruptVector(etiss::InterruptVector * vec, ETISS_CPU * cpu)
 {
 	delete vec;
+}
+
+etiss::InterruptEnable* RV32IMACFDArch::createInterruptEnable(ETISS_CPU* cpu) {
+ 	return new etiss::MappedInterruptEnable<etiss::uint32>(&((RV32IMACFD*)cpu)->MSTATUS, 15);
+}
+
+void RV32IMACFDArch::deleteInterruptEnable(etiss::InterruptEnable* en, ETISS_CPU* cpu) {
+	delete en;
 }

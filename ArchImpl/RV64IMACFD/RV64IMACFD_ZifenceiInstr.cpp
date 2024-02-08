@@ -1,13 +1,11 @@
 /**
- * Generated on Thu, 26 Jan 2023 18:44:34 +0100.
+ * Generated on Tue, 28 Nov 2023 09:45:19 +0100.
  *
  * This file contains the instruction behavior models of the Zifencei
  * instruction set for the RV64IMACFD core architecture.
  */
 
 #include "RV64IMACFDArch.h"
-
-#define ETISS_ARCH_STATIC_FN_ONLY
 #include "RV64IMACFDFuncs.h"
 
 using namespace etiss;
@@ -47,8 +45,12 @@ imm += R_imm_0.read(ba) << 0;
 
 // -----------------------------------------------------------------------------
 cp.code() += "cpu->exception = ETISS_RETURNCODE_RELOADBLOCKS;\n";
-cp.code() += "cpu->nextPc = " + std::to_string(ic.current_address_ + 4UL) + "U;\n";
-cp.code() += "((RV64IMACFD*)cpu)->FENCE[1U] = " + std::to_string(imm) + "U;\n";
+{ // block
+cp.code() += "{ // block\n";
+cp.code() += "cpu->nextPc = " + std::to_string(ic.current_address_ + 4) + "ULL;\n";
+cp.code() += "} // block\n";
+} // block
+cp.code() += "((RV64IMACFD*)cpu)->FENCE[1ULL] = " + std::to_string(imm) + "ULL;\n";
 cp.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
 cp.code() += "cpu->instructionPointer = cpu->nextPc;\n";
 // -----------------------------------------------------------------------------
