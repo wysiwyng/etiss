@@ -1,5 +1,5 @@
 /**
- * Generated on Tue, 28 Nov 2023 09:45:19 +0100.
+ * Generated on Thu, 08 Feb 2024 21:37:27 +0100.
  *
  * This file contains the function implementations for the RV64IMACFD core architecture.
  */
@@ -116,6 +116,9 @@ if (csr == 1LL) { // conditional
 } // conditional
  else if (csr != 769LL) { // conditional
 *((RV64IMACFD*)cpu)->CSR[csr] = val;
+} // conditional
+if (csr == 384LL) { // conditional
+ETISS_SIGNAL_MMU(cpu, system, plugin_pointers, val);
 } // conditional
 } // block
 }
@@ -246,6 +249,9 @@ return;
  else if (cause == -5LL) { // conditional
 code = 5LL;
 } // conditional
+ else if (cause == -13LL) { // conditional
+code = 12LL;
+} // conditional
  else if (cause == -14LL) { // conditional
 code = 13LL;
 } // conditional
@@ -343,6 +349,34 @@ etiss_uint64 irq_mcause = RV64IMACFD_calc_irq_mcause(cpu, system, plugin_pointer
 if (irq_mcause) { // conditional
 RV64IMACFD_raise(cpu, system, plugin_pointers, 1ULL, irq_mcause);
 } // conditional
+} // block
+}
+
+etiss_int32 RV64IMACFD_evict_all(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers)
+{
+{ // block
+return ETISS_TLB_FLUSH(cpu, system, plugin_pointers);
+} // block
+}
+
+etiss_int32 RV64IMACFD_evict_asid(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers, etiss_uint64 asid)
+{
+{ // block
+return ETISS_TLB_FLUSH(cpu, system, plugin_pointers);
+} // block
+}
+
+etiss_int32 RV64IMACFD_evict_addr(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers, etiss_uint64 vaddr)
+{
+{ // block
+return ETISS_TLB_EVICT_VMA(cpu, system, plugin_pointers, vaddr);
+} // block
+}
+
+etiss_int32 RV64IMACFD_evict_addr_asid(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers, etiss_uint64 vaddr, etiss_uint64 asid)
+{
+{ // block
+return ETISS_TLB_FLUSH(cpu, system, plugin_pointers);
 } // block
 }
 

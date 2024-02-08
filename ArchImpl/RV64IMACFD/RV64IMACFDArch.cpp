@@ -36,6 +36,7 @@
 
 #include "RV64IMACFDArch.h"
 #include "RV64IMACFDFuncs.h"
+#include "RV64IMACFD_MMU.h"
 
 #define RV64IMACFD_DEBUG_CALL 0
 using namespace etiss ;

@@ -1,5 +1,5 @@
 /**
- * Generated on Tue, 28 Nov 2023 09:45:19 +0100.
+ * Generated on Thu, 08 Feb 2024 21:37:27 +0100.
  *
  * This file contains the function prototypes for the RV64IMACFD core architecture.
  */
@@ -79,6 +79,8 @@ etiss_uint64 unbox_d(etiss_uint64);
 
 etiss_uint64 fclass_d(etiss_uint64);
 
+etiss_int32 ETISS_SIGNAL_MMU(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers, etiss_uint64 mmu_signal_);
+
 etiss_uint64 etiss_get_cycles(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers);
 
 etiss_uint64 etiss_get_time();
@@ -93,6 +95,8 @@ etiss_uint64 RV64IMACFD_csr_read(ETISS_CPU * const cpu, ETISS_System * const sys
 
 void RV64IMACFD_csr_write(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers, etiss_uint32 csr, etiss_uint64 val);
 
+void etiss_icache_flush(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers);
+
 etiss_uint64 RV64IMACFD_get_field(etiss_uint64 reg, etiss_uint64 mask);
 
 etiss_uint64 RV64IMACFD_set_field(etiss_uint64 reg, etiss_uint64 mask, etiss_uint64 val);
@@ -106,6 +110,18 @@ void RV64IMACFD_translate_exc_code(ETISS_CPU * const cpu, ETISS_System * const s
 etiss_uint64 RV64IMACFD_calc_irq_mcause(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers);
 
 void RV64IMACFD_check_irq(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers);
+
+etiss_int32 ETISS_TLB_FLUSH(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers);
+
+etiss_int32 ETISS_TLB_EVICT_VMA(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers, etiss_uint64 vma_);
+
+etiss_int32 RV64IMACFD_evict_all(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers);
+
+etiss_int32 RV64IMACFD_evict_asid(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers, etiss_uint64 asid);
+
+etiss_int32 RV64IMACFD_evict_addr(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers, etiss_uint64 vaddr);
+
+etiss_int32 RV64IMACFD_evict_addr_asid(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers, etiss_uint64 vaddr, etiss_uint64 asid);
 
 etiss_int64 RV64IMACFD_mulh(etiss_int64 x, etiss_int64 y);
 

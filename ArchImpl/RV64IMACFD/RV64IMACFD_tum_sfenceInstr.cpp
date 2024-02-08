@@ -1,13 +1,11 @@
 /**
- * Generated on Wed, 01 Feb 2023 15:26:20 +0100.
+ * Generated on Thu, 08 Feb 2024 21:37:27 +0100.
  *
  * This file contains the instruction behavior models of the tum_sfence
  * instruction set for the RV64IMACFD core architecture.
  */
 
 #include "RV64IMACFDArch.h"
-
-#define ETISS_ARCH_STATIC_FN_ONLY
 #include "RV64IMACFDFuncs.h"
 
 using namespace etiss;
@@ -44,32 +42,46 @@ rs2 += R_rs2_0.read(ba) << 0;
 
 // -----------------------------------------------------------------------------
 cp.code() += "cpu->exception = ETISS_RETURNCODE_RELOADBLOCKS;\n";
-cp.code() += "cpu->nextPc = " + std::to_string(ic.current_address_ + 4UL) + "U;\n";
-cp.code() += "((RV64IMACFD*)cpu)->FENCE[2U] = " + std::to_string(rs1) + "U;\n";
-cp.code() += "((RV64IMACFD*)cpu)->FENCE[3U] = " + std::to_string(rs2) + "U;\n";
-cp.code() += "etiss_uint64 vaddr = *((RV64IMACFD*)cpu)->X[" + std::to_string(rs1) + "U];\n";
-cp.code() += "etiss_uint64 asid = *((RV64IMACFD*)cpu)->X[" + std::to_string(rs2) + "U];\n";
-if (rs1 == 0U) {
-if (rs2 == 0U) {
-cp.code() += "evict_all(cpu, system, plugin_pointers);\n";
-}
-else {
-cp.code() += "evict_asid(cpu, system, plugin_pointers, asid);\n";
-}
-}
-else {
-if (rs2 == 0U) {
-cp.code() += "evict_addr(cpu, system, plugin_pointers, vaddr);\n";
-}
-else {
-cp.code() += "evict_addr_asid(cpu, system, plugin_pointers, vaddr, asid);\n";
-}
-}
+{ // block
+cp.code() += "{ // block\n";
+cp.code() += "cpu->nextPc = " + std::to_string(ic.current_address_ + 4) + "ULL;\n";
+cp.code() += "} // block\n";
+} // block
+{ // block
+cp.code() += "{ // block\n";
+cp.code() += "((RV64IMACFD*)cpu)->FENCE[2ULL] = " + std::to_string(rs1) + "ULL;\n";
+cp.code() += "((RV64IMACFD*)cpu)->FENCE[3ULL] = " + std::to_string(rs2) + "ULL;\n";
+cp.code() += "etiss_uint64 vaddr = *((RV64IMACFD*)cpu)->X[" + std::to_string(rs1) + "ULL];\n";
+cp.code() += "etiss_uint64 asid = *((RV64IMACFD*)cpu)->X[" + std::to_string(rs2) + "ULL];\n";
+if (rs1 == 0ULL) { // conditional
+{ // block
+cp.code() += "{ // block\n";
+if (rs2 == 0ULL) { // conditional
+cp.code() += "RV64IMACFD_evict_all(cpu, system, plugin_pointers);\n";
+} // conditional
+else { // conditional
+cp.code() += "RV64IMACFD_evict_asid(cpu, system, plugin_pointers, asid);\n";
+} // conditional
+cp.code() += "} // block\n";
+} // block
+} // conditional
+else { // conditional
+{ // block
+cp.code() += "{ // block\n";
+if (rs2 == 0ULL) { // conditional
+cp.code() += "RV64IMACFD_evict_addr(cpu, system, plugin_pointers, vaddr);\n";
+} // conditional
+else { // conditional
+cp.code() += "RV64IMACFD_evict_addr_asid(cpu, system, plugin_pointers, vaddr, asid);\n";
+} // conditional
+cp.code() += "} // block\n";
+} // block
+} // conditional
+cp.code() += "} // block\n";
+} // block
 cp.code() += "instr_exit_" + std::to_string(ic.current_address_) + ":\n";
 cp.code() += "cpu->instructionPointer = cpu->nextPc;\n";
 // -----------------------------------------------------------------------------
-		cp.getRegisterDependencies().add(reg_name[rs1], 64);
-		cp.getRegisterDependencies().add(reg_name[rs2], 64);
 		cp.getAffectedRegisters().add("instructionPointer", 32);
 	}
 	{

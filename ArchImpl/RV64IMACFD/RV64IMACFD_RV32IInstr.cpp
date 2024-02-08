@@ -1,5 +1,5 @@
 /**
- * Generated on Tue, 28 Nov 2023 09:45:19 +0100.
+ * Generated on Thu, 08 Feb 2024 21:37:27 +0100.
  *
  * This file contains the instruction behavior models of the RV32I
  * instruction set for the RV64IMACFD core architecture.
@@ -191,7 +191,7 @@ if (imm % 2ULL) { // conditional
 cp.code() += "{ // block\n";
 { // procedure
 cp.code() += "{ // procedure\n";
-cp.code() += "RV64IMACFD_raise(cpu, system, plugin_pointers, 0ULL, 0ULL);\n";
+cp.code() += "RV64IMACFD_raise(cpu, system, plugin_pointers, 0ULL, 0LL);\n";
 cp.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";\n";
 cp.code() += "} // procedure\n";
 } // procedure
@@ -299,7 +299,7 @@ cp.code() += "if (new_pc % 2ULL) { // conditional\n";
 cp.code() += "{ // block\n";
 { // procedure
 cp.code() += "{ // procedure\n";
-cp.code() += "RV64IMACFD_raise(cpu, system, plugin_pointers, 0ULL, 0ULL);\n";
+cp.code() += "RV64IMACFD_raise(cpu, system, plugin_pointers, 0ULL, 0LL);\n";
 cp.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";\n";
 cp.code() += "} // procedure\n";
 } // procedure
@@ -412,7 +412,7 @@ if (imm % 2ULL) { // conditional
 cp.code() += "{ // block\n";
 { // procedure
 cp.code() += "{ // procedure\n";
-cp.code() += "RV64IMACFD_raise(cpu, system, plugin_pointers, 0ULL, 0ULL);\n";
+cp.code() += "RV64IMACFD_raise(cpu, system, plugin_pointers, 0ULL, 0LL);\n";
 cp.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";\n";
 cp.code() += "} // procedure\n";
 } // procedure
@@ -531,7 +531,7 @@ if (imm % 2ULL) { // conditional
 cp.code() += "{ // block\n";
 { // procedure
 cp.code() += "{ // procedure\n";
-cp.code() += "RV64IMACFD_raise(cpu, system, plugin_pointers, 0ULL, 0ULL);\n";
+cp.code() += "RV64IMACFD_raise(cpu, system, plugin_pointers, 0ULL, 0LL);\n";
 cp.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";\n";
 cp.code() += "} // procedure\n";
 } // procedure
@@ -650,7 +650,7 @@ if (imm % 2ULL) { // conditional
 cp.code() += "{ // block\n";
 { // procedure
 cp.code() += "{ // procedure\n";
-cp.code() += "RV64IMACFD_raise(cpu, system, plugin_pointers, 0ULL, 0ULL);\n";
+cp.code() += "RV64IMACFD_raise(cpu, system, plugin_pointers, 0ULL, 0LL);\n";
 cp.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";\n";
 cp.code() += "} // procedure\n";
 } // procedure
@@ -769,7 +769,7 @@ if (imm % 2ULL) { // conditional
 cp.code() += "{ // block\n";
 { // procedure
 cp.code() += "{ // procedure\n";
-cp.code() += "RV64IMACFD_raise(cpu, system, plugin_pointers, 0ULL, 0ULL);\n";
+cp.code() += "RV64IMACFD_raise(cpu, system, plugin_pointers, 0ULL, 0LL);\n";
 cp.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";\n";
 cp.code() += "} // procedure\n";
 } // procedure
@@ -888,7 +888,7 @@ if (imm % 2ULL) { // conditional
 cp.code() += "{ // block\n";
 { // procedure
 cp.code() += "{ // procedure\n";
-cp.code() += "RV64IMACFD_raise(cpu, system, plugin_pointers, 0ULL, 0ULL);\n";
+cp.code() += "RV64IMACFD_raise(cpu, system, plugin_pointers, 0ULL, 0LL);\n";
 cp.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";\n";
 cp.code() += "} // procedure\n";
 } // procedure
@@ -1007,7 +1007,7 @@ if (imm % 2ULL) { // conditional
 cp.code() += "{ // block\n";
 { // procedure
 cp.code() += "{ // procedure\n";
-cp.code() += "RV64IMACFD_raise(cpu, system, plugin_pointers, 0ULL, 0ULL);\n";
+cp.code() += "RV64IMACFD_raise(cpu, system, plugin_pointers, 0ULL, 0LL);\n";
 cp.code() += "goto instr_exit_" + std::to_string(ic.current_address_) + ";\n";
 cp.code() += "} // procedure\n";
 } // procedure
