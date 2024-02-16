@@ -98,7 +98,10 @@ int main(int argc, const char *argv[])
     std::string CPUArchName = etiss::cfg().get<std::string>("arch.cpu", "");
     etiss::uint64 sa = etiss::cfg().get<uint64_t>("vp.entry_point", dsys.get_startaddr());
 	std::cout << "  CPU start address: 0x" << std::hex << sa << std::dec << std::endl;
-    std::shared_ptr<etiss::CPUCore> cpu = etiss::CPUCore::create(CPUArchName, "core0");
+
+    std::map<std::string, std::string> options = {{"coreno", "0"}};
+
+    std::shared_ptr<etiss::CPUCore> cpu = etiss::CPUCore::create(CPUArchName, "core0", options);
     if (!cpu)
     {
         etiss::log(etiss::FATALERROR, "  Failed to create CPU core!");

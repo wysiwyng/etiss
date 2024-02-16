@@ -41,7 +41,7 @@
 using namespace etiss ;
 using namespace etiss::instr ;
 
-RV32IMACFDArch::RV32IMACFDArch():CPUArch("RV32IMACFD")
+RV32IMACFDArch::RV32IMACFDArch(unsigned int coreno):CPUArch("RV32IMACFD"), coreno_(coreno)
 {
 	headers_.insert("Arch/RV32IMACFD/RV32IMACFD.h");
 }
