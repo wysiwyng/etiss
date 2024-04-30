@@ -57,6 +57,7 @@ struct RV64IMACFD {
 	etiss_uint64 MSTATUS;
 	etiss_uint64 MIE;
 	etiss_uint64 MIP;
+	etiss_uint64 MHARTID;
 	etiss_uint64 *CSR[4096];
 	etiss_uint64 ins_CSR[4096];
 	etiss_uint64 F[32];

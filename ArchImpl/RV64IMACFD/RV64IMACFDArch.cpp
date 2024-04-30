@@ -130,6 +130,7 @@ void RV64IMACFDArch::resetCPU(ETISS_CPU * cpu,etiss::uint64 * startpointer)
 	rv64imacfdcpu->MSTATUS = 0;
 	rv64imacfdcpu->MIE = 0;
 	rv64imacfdcpu->MIP = 0;
+	rv64imacfdcpu->MHARTID = 0;
 	for (int i = 0; i < 32; ++i) {
 		rv64imacfdcpu->F[i] = 0;
 	}
@@ -171,6 +172,7 @@ void RV64IMACFDArch::resetCPU(ETISS_CPU * cpu,etiss::uint64 * startpointer)
  	rv64imacfdcpu->CSR[768] = &rv64imacfdcpu->MSTATUS;
  	rv64imacfdcpu->CSR[772] = &rv64imacfdcpu->MIE;
  	rv64imacfdcpu->CSR[836] = &rv64imacfdcpu->MIP;
+ 	rv64imacfdcpu->CSR[3860] = &rv64imacfdcpu->MHARTID;
 
    	rv64imacfdcpu->PRIV = 3ULL;
    	rv64imacfdcpu->DPC = 0LL;
@@ -184,6 +186,7 @@ void RV64IMACFDArch::resetCPU(ETISS_CPU * cpu,etiss::uint64 * startpointer)
  	*rv64imacfdcpu->CSR[4] = 4294963473ULL;
    	rv64imacfdcpu->RES_ADDR = -1LL;
 
+ 	rv64imacfdcpu->MHARTID = coreno_;
 }
 
 void RV64IMACFDArch::deleteCPU(ETISS_CPU *cpu)
