@@ -1,5 +1,5 @@
 /**
- * Generated on Thu, 18 Apr 2024 00:50:41 +0200.
+ * Generated on Tue, 30 Apr 2024 14:18:29 +0200.
  *
  * This file contains the function prototypes for the RV32IMACFD core architecture.
  */
@@ -80,6 +80,8 @@ etiss_uint64 unbox_d(etiss_uint64);
 
 etiss_uint64 fclass_d(etiss_uint64);
 
+etiss_int32 ETISS_SIGNAL_MMU(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers, etiss_uint32 mmu_signal_);
+
 etiss_uint64 etiss_get_cycles(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers);
 
 etiss_uint64 etiss_get_time();
@@ -93,6 +95,8 @@ etiss_uint32 RV32IMACFD_mstatus_mask(ETISS_CPU * const cpu, ETISS_System * const
 etiss_uint32 RV32IMACFD_csr_read(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers, etiss_uint32 csr);
 
 void RV32IMACFD_csr_write(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers, etiss_uint32 csr, etiss_uint32 val);
+
+void etiss_icache_flush(ETISS_CPU * const cpu, ETISS_System * const system, void * const * const plugin_pointers);
 
 etiss_uint64 RV32IMACFD_get_field(etiss_uint64 reg, etiss_uint64 mask);
 
