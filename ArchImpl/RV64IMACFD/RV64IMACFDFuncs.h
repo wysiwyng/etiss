@@ -1,5 +1,5 @@
 /**
- * Generated on Thu, 08 Feb 2024 21:37:27 +0100.
+ * Generated on Mon, 15 Apr 2024 16:50:50 +0200.
  *
  * This file contains the function prototypes for the RV64IMACFD core architecture.
  */
@@ -15,6 +15,7 @@ extern "C" {
 #include "etiss/jit/CPU.h"
 #include "etiss/jit/System.h"
 #include "etiss/jit/ReturnCode.h"
+#include "etiss/jit/Coverage.h"
 
 
 void leave(etiss_int32 priv_lvl);
