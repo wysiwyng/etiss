@@ -88,7 +88,7 @@ if(${TCCJIT_ARCH} STREQUAL unix)
 
     ExternalProject_Add(TinyCC
         GIT_REPOSITORY https://github.com/TinyCC/tinycc.git
-        GIT_TAG d0c26ba4e50a36779456af71b06ec01985e406e5
+        GIT_TAG 08a4c52de39b202f02d1ec525c64336d11ad9ccf
         GIT_CONFIG advice.detachedHead=false # deliberately checkout a commit hash
 
         CONFIGURE_COMMAND bash <SOURCE_DIR>/configure
